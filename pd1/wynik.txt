@@ -1,0 +1,4 @@
+Dodawanie liczb 1024 i 16 daje w wyniku 1040
+Odejmowanie liczb 1024 i 16 daje w wyniku 1008
+Mnozenie liczb 1024 i 16 daje w wyniku 16384
+Dzielenie liczb 1024 i 16 daje w wyniku 64

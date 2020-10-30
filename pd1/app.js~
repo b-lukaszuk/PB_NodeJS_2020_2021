@@ -1,0 +1,20 @@
+console.log("==zadanie 8==");
+
+const fs = require("fs");
+
+const a = parseInt(fs.readFileSync("./a.txt"));
+const b = parseInt(fs.readFileSync("./b.txt"));
+
+const fnTab = [["Dodawanie", (x, y) => x + y],
+	       ["Odejmowanie", (x, y) => x - y],
+	       ["Mnozenie", (x, y) => x * y],
+	       ["Dzielenie", (x, y) => x / y]];
+
+for (let i = 0; i < fnTab.length; i++) {
+    let wiadomosc = fnTab[i][0] + " liczb " + a + " i " + b +
+        " daje w wyniku " + fnTab[i][1](a, b) + "\n";
+    fs.appendFileSync("wynik.txt", wiadomosc);
+}
+
+console.log("wczytano liczby z plikow a.txt i b.txt");
+console.log("wynik dzialan mat na liczbach zapisano do pliku: wynik.txt");
