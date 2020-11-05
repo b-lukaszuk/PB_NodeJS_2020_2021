@@ -75,22 +75,25 @@
 // } else if (ps.argv.length > 4) {
 //     console.log("zbyt duzo parametrow!");
 // } else {
-//     const fnTab = [["Dodawanie", (x, y) => x + y],
-// 		   ["Odejmowanie", (x, y) => x - y],
-// 		   ["Mnozenie", (x, y) => x * y],
-// 		   ["Dzielenie", (x, y) => x / y]];
+//     // w JS to obiekt, ale w Pythonie slownik
+//     const funDict = {"Dodawanie": (x, y) => x + y,
+//                    "Odejmowanie": (x, y) => x - y,
+//                    "Mnozenie": (x, y) => x * y,
+//                    "Dzielenie": (x, y) => x / y};
 
 //     // argv[0] exec node-a, argv[1] sciezka danego pliku
 //     const a = parseInt(fs.readFileSync(ps.argv[2]));
 //     const b = parseInt(fs.readFileSync(ps.argv[3]));
 
-//     for (let i = 0; i < fnTab.length; i++) {
-// 	let wiadomosc = fnTab[i][0] + " liczb " + a + " i " + b +
-// 	    " daje w wyniku " + fnTab[i][1](a, b) + "\n";
-// 	fs.appendFileSync("wynik.txt", wiadomosc);
+//     // Object.keys(funDict) zwraca tablice kluczy (tu: stringi)
+//     for (klucz of Object.keys(funDict)) {
+//     	let wiadomosc = klucz + " liczb " + a + " i " + b +
+//     	    " daje w wyniku " + funDict[klucz](a, b) + "\n";
+//     	fs.appendFileSync("wynik.txt", wiadomosc);
 //     }
 
-//     console.log("wczytano liczby z plikow " + ps.argv[2] + " i " + ps.argv[3]);
+//     console.log("wczytano liczby z plikow " + ps.argv[2] + " i " +
+//                 ps.argv[3]);
 //     console.log("wynik dzialan mat na liczbach zapisano do pliku: wynik.txt");
 // }
 
@@ -114,7 +117,7 @@ if (ps.argv.length < 3) {
 	if (blad) {
 	    throw "wystapil jakis blad. sprawdz sciezke do podanego folderu";
 	}
-        console.log("Pliki w folderze: " + ps.argv[2] + ":");
+	console.log("Pliki w folderze: " + ps.argv[2] + ":");
 	// files object contains all files names
 	// log them on console
 	pliki.forEach((plik) => console.log(plik));
