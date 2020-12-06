@@ -8,15 +8,15 @@ const fs = require("fs");
 const yargs = require("yargs");
 const args = yargs.argv;
 
-console.log(args);
+// console.log(args);
 
 const a = args.a;
 const b = args.b;
 const operator = args.operator;
 
 // callback fn
-function addDeclar(numer) {
-  return "Twoj wynik to: " + numer;
+function addDeclar(liczba) {
+  return "Twoj wynik to: " + liczba;
 }
 
 // funkcje w slowniku (w JS obiekt) - sposob pythonowy

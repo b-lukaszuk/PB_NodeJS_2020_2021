@@ -8,7 +8,7 @@
 
 const os = require("os");
 
-console.log("uruchomiono program wynik ukaze sie za 5 sekund");
+console.log("uruchomiono program, wynik ukaze sie za 5 sekund");
 
 setTimeout(() => {
   console.log("Witaj " + os.userInfo().username);

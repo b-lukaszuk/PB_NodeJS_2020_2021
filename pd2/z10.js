@@ -19,6 +19,6 @@ function zapiszPowitDoPliku(n_pliku = nazwa_pliku) {
   });
 }
 
-console.log("uruchomiono program wynik ukaze sie za 5 sekund");
+console.log("uruchomiono program, wynik ukaze sie za 5 sekund");
 
 setTimeout(zapiszPowitDoPliku, 5000);
