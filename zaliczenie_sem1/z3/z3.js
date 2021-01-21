@@ -21,7 +21,7 @@ fs.stat(thisFilePath, (err, stats) => {
   } else {
     // thisFilePath to absolute path (przytniemy ja troche aby lepiej wygladalo)
     // prosty regex wyprobowany w: https://regex101.com/
-    // pisany samodzielnie po linux-a (u mnie Linux Mint),
+    // pisany samodzielnie pod linux-a (u mnie Linux Mint),
     // moze nie obslugiwac wymyslnych nazw plikow lub sciezek z innych systemow
     console.log("File: " + thisFilePath.replace(/^.+\/(.+)$/, "$1"));
 
