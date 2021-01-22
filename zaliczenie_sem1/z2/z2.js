@@ -7,16 +7,25 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-rl.question(
-  "Hello user\n" +
-    "Please type your text below and" +
-    "I will color it for you:\n",
-  (answer) => {
-    console.log(answer.rainbow);
-    console.log("All done. See above\nGoodbye :)");
-    rl.close();
-  }
-);
+const defText = "colors of the rainbow";
+
+try {
+  rl.question(
+    "Hello user\n" +
+      "Please type your text below and" +
+      "I will color it for you:\n",
+    (answer) => {
+      if (answer.trim() === "") {
+        answer = defText;
+      }
+      console.log(answer.rainbow);
+      console.log("All done. See above\nGoodbye :)");
+      rl.close();
+    }
+  );
+} catch (error) {
+  console.log("An error has occured. Please correct the input");
+}
 
 // przykladowe wywolanie z bash-a:
 // > node main.js
