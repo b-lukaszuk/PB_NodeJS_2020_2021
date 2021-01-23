@@ -45,7 +45,7 @@ function getTodos(path) {
         reject(err);
       } else {
         const dane = JSON.parse(data);
-        console.log("Todo list read from file: " + path + "\n");
+        // console.log("Todo list read from file: " + path + "\n");
         resolve(jsonToTabTodos(dane));
       }
     });

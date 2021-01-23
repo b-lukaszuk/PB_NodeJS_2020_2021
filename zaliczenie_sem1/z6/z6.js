@@ -34,12 +34,12 @@ function displayTodos() {
 function addTask(taskDesc) {
   for (let i = 0; i < todos.length; i++) {
     if (taskDesc === todos[i].getDesc()) {
-      console.log("Nothing to do. The task is already present\n");
+      console.log("Nothing to do. The task is already present");
       return;
     }
   }
   todos.push(new Todo(taskDesc, false));
-  console.log("Task added\n");
+  console.log("Task added");
 }
 
 /**
@@ -56,7 +56,7 @@ function toggleTaskStatus(taskId) {
     console.log("Nothing to do. Task id out of range");
   } else {
     todos[id].toggleStatus();
-    console.log(`Toggled status for taskId: ${id}\n`);
+    console.log(`Toggled status for taskId: ${id}`);
   }
 }
 
@@ -73,17 +73,22 @@ function removeTask(taskId) {
   } else if (id < 0 || id >= todos.length) {
     console.log("Nothing to do. Task id out of range");
   } else {
-    console.log(`Removing task: ${todos[id].getDesc()}\n with taskId: ${id}`);
+    console.log(`Removing taskDesc: ${todos[id].getDesc()}\ntaskId: ${id}`);
     todos.splice(id, 1);
-    console.log("The task has been removed from the list\n");
+    console.log("The task has been removed from the list");
   }
 }
 
 getTodos(dbPath)
   .then((tabTodos) => {
-    // samo getTodos wyswietla monit o operacji
     todos = tabTodos;
+  })
+  .then(() => {
     // dostepne komendy
+    // dokumentacja yargs.command, tj.
+    // https://yargs.js.org/docs/#api-reference-commandmodule
+    // jest taka sobie,
+    // ale dalem rade
     const argv = yargs
       .command({
         command: "display",
@@ -106,7 +111,7 @@ getTodos(dbPath)
         aliases: ["ts", "t"],
         desc:
           "toggles status (done or not) of a task.\n" +
-          "taskId - number on the left on task display",
+          "taskId - number on the left of the task display",
         handler: (argv) => {
           toggleTaskStatus(argv.taskId);
         },
@@ -116,17 +121,19 @@ getTodos(dbPath)
         aliases: ["rm", "r"],
         desc:
           "removes given task from the list\n" +
-          "taskId - number on the left on task display",
+          "taskId - number on the left of the task display",
         handler: (argv) => {
           removeTask(argv.taskId);
         },
       })
       .help()
       .alias("help", "h").argv;
-
+  })
+  .then(() => {
     saveTodos(dbPath, todos)
       .then((feedback) => {
-        console.log(feedback);
+        // tu monit o zapisaniu danych do pliku
+        // console.log(feedback);
       })
       .catch((err) => {
         console.log(err);
