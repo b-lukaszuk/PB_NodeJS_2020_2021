@@ -21,5 +21,9 @@ Przykład wywołania programu:
 ## Uruchomienie programu
 
 ```bash
-node z6.js
+node z6.js -h # wyswietla opcje
+node z6.js display # skrot: node z6.js d, wyswietla liste todosow
+node z6.js add "umyc zeby" # skrot: node z6.js a "xxx", wyswietla dodaje todos-a
+node z6.js remove 0 # skrot: node z6.js r 0, usuwa todos-a o danym id
+node z6.js togStatus 0 # skrot: node z6.js t 0, zmienia status todos-a o danym id
 ```
