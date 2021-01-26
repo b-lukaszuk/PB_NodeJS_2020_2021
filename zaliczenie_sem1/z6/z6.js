@@ -127,7 +127,8 @@ getTodos(dbPath)
         },
       })
       .help()
-      .alias("help", "h").argv;
+      .alias("help", "h")
+      .demandCommand().argv;
   })
   .then(() => {
     saveTodos(dbPath, todos)

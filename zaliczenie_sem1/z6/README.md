@@ -21,6 +21,7 @@ Przykład wywołania programu:
 ## Uruchomienie programu
 
 ```bash
+node z6.js # wyswietla opcje (informuje o braku podania co najmniej 1 args-a)
 node z6.js -h # wyswietla opcje
 node z6.js display # skrot: node z6.js d, wyswietla liste todosow
 node z6.js add "umyc zeby" # skrot: node z6.js a "xxx", wyswietla dodaje todos-a
