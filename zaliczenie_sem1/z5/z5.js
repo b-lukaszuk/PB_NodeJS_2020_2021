@@ -11,6 +11,13 @@ const getUsrEmail = userModule.getUsrEmail;
 const getUsrAlbums = userAlbums.getUsrAlbums;
 const getAlbumPhotos = albumPhotos.getAlbumPhotos;
 
+/**
+ * przyjmuje najlepiej liczbe, ew string dokonwersji
+ * jesli skonwertuje poprawnie to zwraca ta liczbe
+ * jesli nie to zwraca wartosc domyslna (liczba)
+ * @param {any} maybeDigit - cos co powinno byc liczba
+ * @param {number} defaultDigit - Int do zwr jesli maybeDigit jest niepopr
+ */
 function correctOrDefault(maybeDigit, defaultDigit) {
   const parsedDigit = parseInt(maybeDigit);
   if (isNaN(parsedDigit) || parsedDigit === 0) {
