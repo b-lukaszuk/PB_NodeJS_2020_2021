@@ -6,8 +6,18 @@ const requestPromisified = util.promisify(request);
 const initFile = "./data.json";
 const urlApi = "http://numbersapi.com/";
 
+let fileContent = "";
+
 // obiekt 2 pola, number i filename
-const fileContent = JSON.parse(fs.readFileSync(initFile));
+try {
+  fileContent = JSON.parse(fs.readFileSync(initFile, { encoding: "utf-8" }));
+} catch (error) {
+  console.log(
+    "Could not read data from file: " +
+      initFile +
+      "\nNo information obtained via network.\nThe program will now exit."
+  );
+}
 // by default the file contains the number 42, i.e.
 // the Answer to the Ultimate Question of Life, The Universe, and Everything
 const numberToAsk = fileContent.number;
@@ -18,7 +28,7 @@ requestPromisified(urlApi + numberToAsk)
     if (statusCode === 200) {
       console.log("The request has succeeded.\nData were obtained via network");
       // body jest stringiem
-      fs.writeFile(outputFile, body, (err) => {
+      fs.writeFile(outputFile, body, { encoding: "utf-8" }, (err) => {
         if (err) {
           console.log("An error ocurred. Data hasn't been saved");
         } else {
