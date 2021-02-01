@@ -13,17 +13,16 @@ const fs = require("fs");
 
 // z dokumentacji wynika, ze mamy 2 zmienne __dirname i __filename
 // do zwrotu nazwy folderu w ktorym jest plik i samego pliku
-const thisFilePath = __filename;
 
-fs.stat(thisFilePath, (err, stats) => {
+fs.stat(__filename, (err, stats) => {
   if (err) {
     console.log("Error! Please check file path");
   } else {
-    // thisFilePath to absolute path (przytniemy ja troche aby lepiej wygladalo)
+    // __filename to absolute path (przytniemy ja troche aby lepiej wygladalo)
     // prosty regex wyprobowany w: https://regex101.com/
     // pisany samodzielnie pod linux-a (u mnie Linux Mint),
     // moze nie obslugiwac wymyslnych nazw plikow lub sciezek z innych systemow
-    console.log("File: " + thisFilePath.replace(/^.+\/(.+)$/, "$1"));
+    console.log("File: " + __filename.replace(/^.+\/(.+)$/, "$1"));
 
     // systemy unixowe (linux jest unixopodobny) moga nie przechowywac
     // daty utworzenia pliku
