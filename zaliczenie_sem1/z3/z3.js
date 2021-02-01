@@ -11,8 +11,9 @@ const fs = require("fs");
 // Objects returned from fs.stat(), fs.lstat() and fs.fstat() and
 // their synchronous counterparts are of this type.
 
-// argv[0] exec node-a, argv[1] sciezka tego pliku
-const thisFilePath = process.argv[1];
+// z dokumentacji wynika, ze mamy 2 zmienne __dirname i __filename
+// do zwrotu nazwy folderu w ktorym jest plik i samego pliku
+const thisFilePath = __filename;
 
 fs.stat(thisFilePath, (err, stats) => {
   if (err) {
