@@ -1,6 +1,5 @@
 // https://nodejs.org/api/index.html
 const fs = require("fs");
-const ps = require("process");
 
 // z dokumentacji wynika, ze bede potrzebowal:
 // stats.birthtimeMs
@@ -13,7 +12,7 @@ const ps = require("process");
 // their synchronous counterparts are of this type.
 
 // argv[0] exec node-a, argv[1] sciezka tego pliku
-const thisFilePath = ps.argv[1];
+const thisFilePath = process.argv[1];
 
 fs.stat(thisFilePath, (err, stats) => {
   if (err) {
@@ -25,7 +24,7 @@ fs.stat(thisFilePath, (err, stats) => {
     // moze nie obslugiwac wymyslnych nazw plikow lub sciezek z innych systemow
     console.log("File: " + thisFilePath.replace(/^.+\/(.+)$/, "$1"));
 
-    // systemy unixowe (liux jest unixopodobny) moga nie przechowywac
+    // systemy unixowe (linux jest unixopodobny) moga nie przechowywac
     // daty utworzenia pliku
     // https://unix.stackexchange.com/questions/20460/how-do-i-do-a-ls-and-then-sort-the-results-by-date-created
     // mozna to obejsc np. cos doinstalowujac (patrz link wyzej)
