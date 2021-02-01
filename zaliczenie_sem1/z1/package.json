@@ -1,0 +1,11 @@
+{
+  "name": "z1",
+  "version": "1.0.0",
+  "description": "zad 1 (zal sem 1 z NodeJS)",
+  "main": "z1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartlomiej Lukaszuk",
+  "license": "MIT"
+}

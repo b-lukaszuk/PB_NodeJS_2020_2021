@@ -1,0 +1,11 @@
+{
+  "name": "z4",
+  "version": "1.0.0",
+  "description": "zad 4 (zaliczenie sem 1 z NodeJS) nie dziala",
+  "main": "z4.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartlomiej Lukaszuk",
+  "license": "MIT"
+}

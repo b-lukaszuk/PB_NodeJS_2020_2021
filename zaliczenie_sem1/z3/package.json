@@ -1,0 +1,11 @@
+{
+  "name": "z3",
+  "version": "1.0.0",
+  "description": "zad 3 (zaliczenie sem 1 z NodeJS)",
+  "main": "z3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartlomiej Lukaszuk",
+  "license": "MIT"
+}
