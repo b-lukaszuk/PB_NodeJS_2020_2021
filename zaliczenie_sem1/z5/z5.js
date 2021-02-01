@@ -37,10 +37,10 @@ const albumId = correctOrDefault(ps.argv[3], defDigit);
 // informacje poczatkowe dla uzytkownika
 console.log("searching for:");
 console.log(
-  `\tuser id (if incorrect input search for id = ${defDigit}): ${userId}`
+  `\tuser id (if incor. or no input search for id = ${defDigit}): ${userId}`
 );
 console.log(
-  `\talbum id: (if incorrect input search for id = ${defDigit}): ${albumId}`
+  `\talbum id: (if incor. or no input search for id = ${defDigit}): ${albumId}`
 );
 console.log("=====");
 
