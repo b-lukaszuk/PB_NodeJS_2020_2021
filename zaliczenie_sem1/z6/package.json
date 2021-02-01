@@ -7,5 +7,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bartlomiej Lukaszuk",
-  "license": "MIT"
+  "license": "MIT",
+  "man": "README.md",
+  "os": [
+    "linux"
+  ],
+  "engines": {
+    "node": "14.15.4",
+    "npm": "6.14.11"
+  },
+  "dependencies": {
+    "yargs": "^16.2.0"
+  }
 }
