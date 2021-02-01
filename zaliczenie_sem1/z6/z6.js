@@ -17,9 +17,10 @@ let todos = [];
 
 /**
  * zapisuje liste todos-ow do pliku
+ * @param {Array<Object>} myTodos - lista obiektow klasy Todo
  */
-function saveMyTodos() {
-  saveTodos(dbPath, todos)
+function saveMyTodos(myTodos) {
+  saveTodos(dbPath, myTodos)
     .then((feedback) => {
       // tu monit o zapisaniu danych do pliku
       // console.log(feedback);
@@ -31,13 +32,14 @@ function saveMyTodos() {
 
 /**
  * wyswietla liste todos-ow w konsoli
+ * @param {Array<Object>} myTodos - lista obiektow klasy Todo
  */
-function displayTodos() {
+function displayTodos(myTodos) {
   console.log("Your todo list:\n");
-  if (!todos.length) {
+  if (!myTodos.length) {
     console.log("The list is empty. Nothing to display.");
   } else {
-    todos.forEach((item, index) => {
+    myTodos.forEach((item, index) => {
       console.log(index + ". " + item.toString());
     });
   }
@@ -48,17 +50,20 @@ function displayTodos() {
  * taskDesc musza byc unikalne
  * wyswietla monit w konsoli o powodzeniu operacji
  * @param {string} taskDesc - opis taska
+ * @param {Array<Object>} myTodos - lista obiektow klasy Todo
+ * @return {Array<Object>} lista ob klasy Todo z nowym obiektem appendowanym
+ * podejscie funkcyjne - nie modyfikuje myTodos (zwraca kopie)
  */
-function addTask(taskDesc) {
-  for (let i = 0; i < todos.length; i++) {
-    if (taskDesc === todos[i].getDesc()) {
-      console.log("Nothing to do. The task is already present");
-      return;
+function addTask(taskDesc, myTodos) {
+  for (let i = 0; i < myTodos.length; i++) {
+    if (taskDesc === myTodos[i].getDesc()) {
+      console.log("Nothing to do. The task is already present.");
+      return myTodos;
     }
   }
-  todos.push(new Todo(taskDesc, false));
+  let tmpTodos = [...myTodos, new Todo(taskDesc, false)];
   console.log("Task added");
-  saveMyTodos();
+  return tmpTodos;
 }
 
 /**
@@ -66,17 +71,31 @@ function addTask(taskDesc) {
  * wyswietla monit w konsoli o powodzeniu operacji
  * @param {number} taskId - id/nr porzadkowy taska (od 0 do n-1)
  * wyswietlany po lewej stronie przez funkcje wyswietlajaca taski
+ * @param {Array<Object>} myTodos - lista obiektow klasy Todo
+ * @return {Array<Object>} lista ob klasy Todo (1 ob o zmienionym statusie)
+ * podejscie funkcyjne - nie modyfikuje myTodos (zwraca kopie)
  */
-function toggleTaskStatus(taskId) {
+function toggleTaskStatus(taskId, myTodos) {
   let id = parseInt(taskId);
   if (isNaN(id)) {
     console.log("Nothing to do. Incorrect task id given.");
-  } else if (id < 0 || id >= todos.length) {
-    console.log("Nothing to do. Task id out of range");
+    return myTodos;
+  } else if (!myTodos.length) {
+    console.log("Nothing to do. The list is empty.");
+    return myTodos;
+  } else if (id < 0 || id >= myTodos.length) {
+    console.log("Nothing to do. Task id out of range.");
+    return myTodos;
   } else {
-    todos[id].toggleStatus();
+    let tmpTodos = myTodos.map((t, indx) => {
+      if (indx === taskId) {
+        return new Todo(t.taskDesc, !t.done);
+      } else {
+        return new Todo(t.taskDesc, t.done);
+      }
+    });
     console.log(`Toggled status for taskId: ${id}`);
-    saveMyTodos();
+    return tmpTodos;
   }
 }
 
@@ -85,29 +104,50 @@ function toggleTaskStatus(taskId) {
  * wyswietla monit w konsoli o powodzeniu operacji
  * @param {number} taskId - id/nr porzadkowy taska (od 0 do n-1)
  * wyswietlany po lewej stronie przez funkcje wyswietlajaca taski
+ * @param {Array<Object>} myTodos - lista obiektow klasy Todo
+ * @return {Array<Object>} lista ob klasy Todo bez 1 obiektu
+ * podejscie funkcyjne - nie modyfikuje myTodos (zwraca kopie)
  */
-function removeTask(taskId) {
+function removeTask(taskId, myTodos) {
   let id = parseInt(taskId);
   if (isNaN(id)) {
     console.log("Nothing to do. Incorrect task id given.");
+    return myTodos;
+  } else if (!myTodos.length) {
+    console.log("Nothing to do. The list is already empty.");
+    return myTodos;
   } else if (id < 0 || id >= todos.length) {
-    console.log("Nothing to do. Task id out of range");
+    console.log("Nothing to do. Task id out of range.");
+    return myTodos;
   } else {
     console.log(`Removing taskDesc: ${todos[id].getDesc()}\ntaskId: ${id}`);
-    todos.splice(id, 1);
+    let tmpTodos = [];
+    for (let i = 0; i < myTodos.length; i++) {
+      if (i !== taskId) {
+        tmpTodos.push(myTodos[i]);
+      }
+    }
     console.log("The task has been removed from the list");
-    saveMyTodos();
+    return tmpTodos;
   }
 }
 
 /**
  * usuwa wszystkie taski z listy taskow,
  * wyswietla monit w konsoli o powodzeniu operacji
+ * @param {Array<Object>} myTodos - lista obiektow klasy Todo
+ * @return {Array<Object>} lista ob klasy Todo bez 1 obiektu
+ * podejscie funkcyjne - nie modyfikuje myTodos (zwraca pusty Array)
  */
-function remAllTasks() {
-  todos = [];
-  console.log("All tasks have been removed.");
-  saveMyTodos();
+function remAllTasks(myTodos) {
+  if (!myTodos.length) {
+    console.log("Nothing to do. The list is already empty.");
+    return myTodos;
+  } else {
+    let tmpTodos = [];
+    console.log("All tasks have been removed.");
+    return tmpTodos;
+  }
 }
 
 getTodos(dbPath)
@@ -126,7 +166,7 @@ getTodos(dbPath)
         aliases: ["d", "print", "p"],
         desc: "displays current todo list",
         handler: () => {
-          displayTodos();
+          displayTodos(todos);
         },
       })
       .command({
@@ -134,7 +174,8 @@ getTodos(dbPath)
         aliases: ["a"],
         desc: "adds taskDesc to todo list",
         handler: (argv) => {
-          addTask(argv.taskDesc);
+          todos = addTask(argv.taskDesc, todos);
+          saveMyTodos(todos);
         },
       })
       .command({
@@ -144,7 +185,8 @@ getTodos(dbPath)
           "toggles status (done or not) of a task.\n" +
           "taskId - number on the left of the task display",
         handler: (argv) => {
-          toggleTaskStatus(argv.taskId);
+          todos = toggleTaskStatus(argv.taskId, todos);
+          saveMyTodos(todos);
         },
       })
       .command({
@@ -154,7 +196,8 @@ getTodos(dbPath)
           "removes given task from the list\n" +
           "taskId - number on the left of the task display",
         handler: (argv) => {
-          removeTask(argv.taskId);
+          todos = removeTask(argv.taskId, todos);
+          saveMyTodos(todos);
         },
       })
       .command({
@@ -162,7 +205,8 @@ getTodos(dbPath)
         aliases: ["ra"],
         desc: "removes all tasks from the list",
         handler: () => {
-          remAllTasks();
+          todos = remAllTasks(todos);
+          saveMyTodos(todos);
         },
       })
       .help()
