@@ -13,9 +13,9 @@ Sposób obsługi parametrów wejściowych jest dowolny (w kodzie rozwiązania na
 ```bash
 node z2.js
 Hello user # (dbp)
-Please type your text below andI will color it for you: # (dbp)
+Please type your text below and I will color it for you: # (dbp)
 colors of the rainbow # user's input
 colors of the rainbow # (dbp)
-All done. See above # (dbp)
+All done. See above. # (dbp)
 Goodbye :) # (dbp)
 ```

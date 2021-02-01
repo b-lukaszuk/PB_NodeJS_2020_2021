@@ -12,14 +12,14 @@ const defText = "colors of the rainbow";
 try {
   rl.question(
     "Hello user\n" +
-      "Please type your text below and" +
+      "Please type your text below and " +
       "I will color it for you:\n",
     (answer) => {
       if (answer.trim() === "") {
         answer = defText;
       }
       console.log(answer.rainbow);
-      console.log("All done. See above\nGoodbye :)");
+      console.log("All done. See above.\nGoodbye :)");
       rl.close();
     }
   );
