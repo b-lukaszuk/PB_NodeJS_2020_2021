@@ -16,13 +16,31 @@ const dbPath = "./todoList.json";
 let todos = [];
 
 /**
+ * zapisuje liste todos-ow do pliku
+ */
+function saveMyTodos() {
+  saveTodos(dbPath, todos)
+    .then((feedback) => {
+      // tu monit o zapisaniu danych do pliku
+      // console.log(feedback);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+/**
  * wyswietla liste todos-ow w konsoli
  */
 function displayTodos() {
   console.log("Your todo list:\n");
-  todos.forEach((item, index) => {
-    console.log(index + ". " + item.toString());
-  });
+  if (!todos.length) {
+    console.log("The list is empty. Nothing to display.");
+  } else {
+    todos.forEach((item, index) => {
+      console.log(index + ". " + item.toString());
+    });
+  }
 }
 
 /**
@@ -40,6 +58,7 @@ function addTask(taskDesc) {
   }
   todos.push(new Todo(taskDesc, false));
   console.log("Task added");
+  saveMyTodos();
 }
 
 /**
@@ -57,6 +76,7 @@ function toggleTaskStatus(taskId) {
   } else {
     todos[id].toggleStatus();
     console.log(`Toggled status for taskId: ${id}`);
+    saveMyTodos();
   }
 }
 
@@ -76,7 +96,18 @@ function removeTask(taskId) {
     console.log(`Removing taskDesc: ${todos[id].getDesc()}\ntaskId: ${id}`);
     todos.splice(id, 1);
     console.log("The task has been removed from the list");
+    saveMyTodos();
   }
+}
+
+/**
+ * usuwa wszystkie taski z listy taskow,
+ * wyswietla monit w konsoli o powodzeniu operacji
+ */
+function remAllTasks() {
+  todos = [];
+  console.log("All tasks have been removed.");
+  saveMyTodos();
 }
 
 getTodos(dbPath)
@@ -126,19 +157,17 @@ getTodos(dbPath)
           removeTask(argv.taskId);
         },
       })
+      .command({
+        command: "removeAll",
+        aliases: ["ra"],
+        desc: "removes all tasks from the list",
+        handler: () => {
+          remAllTasks();
+        },
+      })
       .help()
       .alias("help", "h")
       .demandCommand().argv;
-  })
-  .then(() => {
-    saveTodos(dbPath, todos)
-      .then((feedback) => {
-        // tu monit o zapisaniu danych do pliku
-        // console.log(feedback);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   })
   .catch((err) => {
     console.log(err);
