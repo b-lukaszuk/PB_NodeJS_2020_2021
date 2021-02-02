@@ -17,7 +17,13 @@ try {
       initFile +
       "\nNo information obtained via network.\nThe program will now exit."
   );
+  // zakonczenie programu (sugestia prowadzacego, aby jakos zakonczyc)
+  // inaczej kod ponizej i tak sie wykona
+  // (mozna zmienic initFile na nie istniejacy i
+  // dac konsol loga kilka linijek nizej aby to zobaczyc)
+  process.exit(1);
 }
+
 // by default the file contains the number 42, i.e.
 // the Answer to the Ultimate Question of Life, The Universe, and Everything
 const numberToAsk = fileContent.number;
