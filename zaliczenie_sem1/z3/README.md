@@ -21,6 +21,12 @@ node app2.js # wyświetla szczegóły pliku app2.js
 ```
 Podpowiedź: jest to możliwe przy użyciu standardowych modułów Node.js.
 
+## Przed pierwszym uruchomieniem
+
+```bash
+npm install # instaluje potrzebne zaleznosci
+```
+
 ## Uruchomienie programu
 
 ```bash

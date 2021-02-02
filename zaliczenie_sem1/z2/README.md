@@ -6,6 +6,12 @@ Napisz aplikację która przyjmuje w parametrze ciąg znaków a następnie wyśw
 
 Sposób obsługi parametrów wejściowych jest dowolny (w kodzie rozwiązania należy dodać komentarz z przykładowym wywołaniem).
 
+## Przed pierwszym uruchomieniem
+
+```bash
+npm install # instaluje potrzebne zaleznosci
+```
+
 ## Uruchomienie programu
 
 (dbp) - displayed by the program

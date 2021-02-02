@@ -16,6 +16,13 @@ Lista adresów API:
 - endpoint do albumów: https://jsonplaceholder.typicode.com/albums?userId={id_użytkownika}
 - endpoint do zdjęć: https://jsonplaceholder.typicode.com/photos?albumId={id_albumu}
 
+
+## Przed pierwszym uruchomieniem
+
+```bash
+npm install # instaluje potrzebne zaleznosci
+```
+
 ## Uruchomienie programu
 
 ```bash

@@ -16,6 +16,12 @@ Przykład pliku: data.json
 
 Pamiętaj o obsłudze błędów. Żądania do API oraz zapis do pliku wykonuj asynchronicznie.
 
+## Przed pierwszym uruchomieniem
+
+```bash
+npm install # instaluje potrzebne zaleznosci
+```
+
 ## Uruchomienie programu
 
 ```bash

@@ -10,6 +10,12 @@ czyli zwróci komunikat błędu:
 Uncaught RangeError: Maximum call stack size exceeded
 ```
 
+## Przed pierwszym uruchomieniem
+
+```bash
+npm install # instaluje potrzebne zaleznosci
+```
+
 ## Uruchomienie programu
 
 ```bash

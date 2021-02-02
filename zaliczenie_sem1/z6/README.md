@@ -18,6 +18,13 @@ Przykład wywołania programu:
 ```bash
 > node app.js lista
 ```
+
+## Przed pierwszym uruchomieniem
+
+```bash
+npm install # instaluje potrzebne zaleznosci
+```
+
 ## Uruchomienie programu
 
 ```bash

@@ -8,7 +8,9 @@ class Todo {
   }
 
   toString() {
-    return this.taskDesc + " " + (this.done ? "\u2714" : "\u2718");
+    // wymaga obslugi utf-8 przez terminal
+    // return this.taskDesc + " " + (this.done ? "\u2714" : "\u2718");
+    return this.taskDesc + " " + (this.done ? "V" : "X");
   }
 
   toggleStatus() {
