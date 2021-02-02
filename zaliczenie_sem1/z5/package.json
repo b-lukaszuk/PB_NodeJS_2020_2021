@@ -1,7 +1,7 @@
 {
   "name": "z5",
   "version": "1.0.0",
-  "description": "zad 5 (zaliczenie sem 1 z NodeJS) nie dziala",
+  "description": "zad 5 (zaliczenie sem 1 z NodeJS)",
   "main": "z5.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

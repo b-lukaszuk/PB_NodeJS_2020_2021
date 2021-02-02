@@ -12,7 +12,7 @@ const getUsrAlbums = userAlbums.getUsrAlbums;
 const getAlbumPhotos = albumPhotos.getAlbumPhotos;
 
 /**
- * przyjmuje najlepiej liczbe, ew string dokonwersji
+ * przyjmuje najlepiej liczbe, ew string do konwersji
  * jesli skonwertuje poprawnie to zwraca ta liczbe
  * jesli nie to zwraca wartosc domyslna (liczba)
  * @param {any} maybeDigit - cos co powinno byc liczba
@@ -20,7 +20,7 @@ const getAlbumPhotos = albumPhotos.getAlbumPhotos;
  */
 function correctOrDefault(maybeDigit, defaultDigit) {
   const parsedDigit = parseInt(maybeDigit);
-  if (isNaN(parsedDigit) || parsedDigit === 0) {
+  if (isNaN(parsedDigit) || parsedDigit <= 0) {
     return defaultDigit;
   } else {
     return parsedDigit;
