@@ -44,6 +44,7 @@ console.log(
 );
 console.log("=====");
 
+// ewentualnie dac chain then-ow, aby ladowac w okreslonej kolejnosci
 // 1. adres mailowy urzytkownika
 getUsrEmail(userId)
   .then((response) => {
