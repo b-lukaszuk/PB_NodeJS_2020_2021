@@ -211,7 +211,8 @@ getTodos(dbPath)
       })
       .help()
       .alias("help", "h")
-      .demandCommand().argv;
+      .demandCommand(1)
+      .strict(true).argv;
   })
   .catch((err) => {
     console.log(err);
