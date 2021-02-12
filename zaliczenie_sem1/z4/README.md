@@ -16,7 +16,15 @@ Przykład pliku: data.json
 
 Pamiętaj o obsłudze błędów. Żądania do API oraz zapis do pliku wykonuj asynchronicznie.
 
-## Przed pierwszym uruchomieniem
+## Sposob tworzenia tego projektu
+
+```bash
+npm init # tworzenie pliku package.json
+npm i yargs --save # dodanie modulu (tu jako przyklad yargs)
+# (updateuje package.json i package-lock.json)
+```
+
+## Przed pierwszym uruchomieniem (po pobraniu z github-a)
 
 ```bash
 npm install # instaluje potrzebne zaleznosci

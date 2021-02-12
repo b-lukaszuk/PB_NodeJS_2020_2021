@@ -6,7 +6,15 @@ Napisz aplikację która przyjmuje w parametrze ciąg znaków a następnie wyśw
 
 Sposób obsługi parametrów wejściowych jest dowolny (w kodzie rozwiązania należy dodać komentarz z przykładowym wywołaniem).
 
-## Przed pierwszym uruchomieniem
+## Sposob tworzenia tego projektu
+
+```bash
+npm init # tworzenie pliku package.json
+npm i colors@1.3.2 --save # dodanie modulu (tu jako przyklad colors w wersji 1.3.2)
+# (updateuje package.json i package-lock.json)
+```
+
+## Przed pierwszym uruchomieniem (po pobraniu z github-a)
 
 ```bash
 npm install # instaluje potrzebne zaleznosci

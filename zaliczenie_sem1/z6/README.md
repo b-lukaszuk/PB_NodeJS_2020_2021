@@ -19,7 +19,14 @@ Przykład wywołania programu:
 > node app.js lista
 ```
 
-## Przed pierwszym uruchomieniem
+## Sposob tworzenia tego projektu
+
+```bash
+npm init # tworzenie pliku package.json
+npm i yargs --save # dodanie yargsa (updateuje package.json i package-lock.json)
+```
+
+## Przed pierwszym uruchomieniem (po pobraniu z github-a)
 
 ```bash
 npm install # instaluje potrzebne zaleznosci

@@ -21,7 +21,15 @@ node app2.js # wyświetla szczegóły pliku app2.js
 ```
 Podpowiedź: jest to możliwe przy użyciu standardowych modułów Node.js.
 
-## Przed pierwszym uruchomieniem
+## Sposob tworzenia tego projektu
+
+```bash
+npm init # tworzenie pliku package.json
+npm i yargs --save # dodanie modulu (tu jako przyklad yargs)
+# (updateuje package.json i package-lock.json)
+```
+
+## Przed pierwszym uruchomieniem (po pobraniu z github-a)
 
 ```bash
 npm install # instaluje potrzebne zaleznosci
