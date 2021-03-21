@@ -65,11 +65,11 @@ node main.js # uruchomienie progamu
 
 ## Kolejne uruchomienie
 
-1. Po wypakowaniu wejsc do folderu Postman i z basha wpisac:
+1. Wejsc do folderu Postman i z basha wpisac:
 
 ```bash
 ./Postman
 ```
-2. Po odpaleniu GUI nie logowac sie, nie tworzyc darmowego konta
-3. Przejsc dalej (malo widoczny napis u dolu pod logowaniem)
-4. Voila mozna uzywac
+2. Voila mozna uzywac
+
+Prawdopodobnie nie trzeba bedzie przechodzic przez punkty 4 i 5 z instalacji
