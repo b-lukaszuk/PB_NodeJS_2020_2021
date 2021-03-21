@@ -20,20 +20,17 @@
 
 Stwórzmy aplikację która pobiera 2 parametry `a` i `b` z adresu url i wykona mnożenie w naszej aplikacji. Rezultat działania powinniśmy wysłać do użytkownika końcowego(klienta). 
 
-```
-http://localhost:4700?a=5&b=2 //wywołanie
-10 //rezultat
-```
+> http://localhost:4700?a=5&b=2 //wywołanie
+> 10 //rezultat
+
 ## Task 7
 
 Rozszerzmy naszą aplikację z zadania 6 o dodatkowe działania matematyczne takie jak mnożenie, dzielenie i odejmowanie. Podzielmy zadania na odpowiednie ścieżki.
 
-```
-/mnozenie...
-/dzielenie...
-/dodawanie...
-/odejmowanie...
-```
+> /mnozenie...
+> /dzielenie...
+> /dodawanie...
+> /odejmowanie...
 
 Gdy działanie jest niemożliwe do wykonania, aplikacja zwraca odpowiedni komunikat oraz kod statusu `Bad Request`
 
@@ -41,12 +38,10 @@ Gdy działanie jest niemożliwe do wykonania, aplikacja zwraca odpowiedni komuni
 
 Napiszmy aplikacja która zwróci wszystkie parametry podane w url. Zwracany rezultat powinien być obiektem i mieć `'Content-type':'application/json'`
 
-```
-http://localhost:4700?a=5&b=2 //wywołanie
-{'a':'1','b':'2'} //rezultat
-http://localhost:4700?name=jan&lastname=kowalski //wywołanie
-{'name':'jan','lastname':'kowalski'} //rezultat
-```
+> http://localhost:4700?a=5&b=2 //wywołanie
+> {'a':'1','b':'2'} //rezultat
+> http://localhost:4700?name=jan&lastname=kowalski //wywołanie
+> {'name':'jan','lastname':'kowalski'} //rezultat
 
 ## Task 9
 

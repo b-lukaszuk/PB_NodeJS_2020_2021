@@ -1,7 +1,7 @@
 {
   "name": "z6",
   "version": "1.0.0",
-  "description": "wykonanie operacji na liczbach przeslanych do serwera",
+  "description": "wykonanie operacji (+) na liczbach przeslanych do serwera",
   "main": "main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

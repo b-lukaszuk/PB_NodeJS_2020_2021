@@ -1,0 +1,14 @@
+{
+  "name": "z7",
+  "version": "1.0.0",
+  "description": "perform 4 basic math oper on numbers sed to server",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartlomiej Lukaszuk",
+  "license": "MIT",
+  "dependencies": {
+    "http": "0.0.1-security"
+  }
+}
