@@ -39,7 +39,7 @@ function addToLogs(message, logsPath) {
         if (err) {
             throw err;
         } else {
-            console.log("log saved");
+            // nothing to do here
         }
     });
 }
@@ -59,8 +59,7 @@ app.get("/users/:userId", (req, res, next) => {
             res.json(response.data);
         })
         .catch((error) => {
-            console.log("user not found: more info in log files");
-            console.log(error.response.status);
+            console.log("An error ocurred. Details to be found in a log file");
             next(error);
         })
 })
@@ -82,7 +81,6 @@ app.use((error, req, res, next) => {
         }
     });
 });
-
 
 app.listen(port, () => {
     console.log(`Server started at: localhost://${port}`);
