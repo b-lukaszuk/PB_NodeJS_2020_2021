@@ -1,15 +1,15 @@
 "use strict";
 const funcs = {
-  "+": (acc, curVal) => {
+  dodawanie: (acc, curVal) => {
     return acc + curVal;
   },
-  "-": (acc, curVal) => {
+  odejmowanie: (acc, curVal) => {
     return acc - curVal;
   },
-  "*": (acc, curVal) => {
+  mnozenie: (acc, curVal) => {
     return acc * curVal;
   },
-  "/": (acc, curVal) => {
+  dzielenie: (acc, curVal) => {
     return acc / curVal;
   },
 };
@@ -25,7 +25,7 @@ for (let mathOper of Object.keys(funcs)) {
 
 /**
  * performs one of 4 basic mathematical operations on numbers
- * @param {string} operType - "+"|"-"|"*"|"/"
+ * @param {string} operType - one of the availableMathOpers
  * @return {number} result of such operation
  */
 function perfMathOper(operType, ...nums) {

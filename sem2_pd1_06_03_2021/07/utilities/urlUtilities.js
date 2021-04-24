@@ -15,6 +15,16 @@ function isEmptyString(text) {
   return !Boolean(text.trim());
 }
 
+/**
+ * checks for given string in url
+ * @param {string} url - url, e.g. "http://localhost:4700/dodawanie/?a=5&b=2"
+ * @param {string} substring - string to be found in url
+ * @return {boolean} - answer to the question
+ */
+function isStrInUrl(url, substring) {
+  return url.includes(substring);
+}
+
 function isQueryInUrl(url) {
   let query = getQueryFromUrl(url);
   return !isEmptyString(query);
@@ -72,4 +82,10 @@ function getArgsValsInt(url) {
   return stringsToInts(argsValsStr);
 }
 
-module.exports = { isQueryInUrl, getArgsFromUrl, getArgsValsInt, getArgsNames };
+module.exports = {
+  isQueryInUrl,
+  isStrInUrl,
+  getArgsFromUrl,
+  getArgsValsInt,
+  getArgsNames,
+};
