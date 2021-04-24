@@ -6,6 +6,9 @@ const app = express();
 const fs = require("fs");
 const path = require("path");
 
+///////////////////////////////////////////////////////////////////////////////
+//                         global constants/variables                        //
+///////////////////////////////////////////////////////////////////////////////
 const port = 4700;
 let logsPath = path.join(__dirname, "logs/",
     "logs_" + todayDate() + ".txt");
