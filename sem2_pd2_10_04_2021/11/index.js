@@ -5,10 +5,16 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
+
+///////////////////////////////////////////////////////////////////////////////
+//                         global constants/variables                        //
+///////////////////////////////////////////////////////////////////////////////
 const port = 4700;
 let logsPath = path.join(__dirname, "logs/",
     "logs_" + todayDate() + ".txt");
+const dbUrl = "https://jsonplaceholder.typicode.com/users/";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,13 +32,6 @@ function todayDate() {
     let [month, day, year, garbage] = today.split("/");
     let result = `${day}_${month}_${year}`;
     return result;
-}
-
-function pauseXms(milisecs) {
-    let start = new Date();
-    while ((new Date() - start) <= milisecs) {
-        // nothing to do here, just wait
-    }
 }
 
 function addToLogs(message, logsPath) {
@@ -63,10 +62,16 @@ app.use(myMid);
 
 app.get("/", (req, res) => {
     res.send("The main page");
-    pauseXms(1000);
-    let resSendTime = new Date().toLocaleTimeString();
-    let logMsg = `Response send: ${resSendTime}\n`
-    addToLogs(logMsg, logsPath);
+})
+
+app.get("/users/:userId", (req, res) => {
+    axios.get(dbUrl + req.params.userId)
+        .then((response) => {
+            res.json(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
 })
 
 app.listen(port, () => {
