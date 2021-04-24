@@ -44,35 +44,45 @@ function addToLogs(message, logsPath) {
     });
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-//                                 middleware                                //
-///////////////////////////////////////////////////////////////////////////////
-const myMid = (req, res, next) => {
-    let reqReceivedTime = new Date().toLocaleTimeString();
-    let logMsg = `Request received: ${reqReceivedTime}\n`
-    addToLogs(logMsg, logsPath);
-    next();
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 //                             program execution                             //
 ///////////////////////////////////////////////////////////////////////////////
-app.use(myMid);
-
 app.get("/", (req, res) => {
     res.send("The main page");
 })
 
-app.get("/users/:userId", (req, res) => {
+app.get("/users/:userId", (req, res, next) => {
     axios.get(dbUrl + req.params.userId)
         .then((response) => {
+            res.status(200);
+            // https://www.geeksforgeeks.org/express-js-res-json-function/
             res.json(response.data);
         })
         .catch((error) => {
-            console.log(error);
+            console.log("user not found: more info in log files");
+            console.log(error.response.status);
+            next(error);
         })
 })
+
+// required middleware with error handling
+app.use((error, req, res, next) => {
+    addToLogs(`${new Date().toTimeString()}: `, logsPath);
+    let msg = error.config.url + " => statusCode: " + error.response.status;
+    addToLogs(msg + "\n\n", logsPath);
+    return res.status(error.response.status).json({
+        error: {
+            nonTechnicalDescription: "An error occured. Sorry",
+            technicalDetails:
+            {
+                url: error.config.url,
+                code: error.response.status,
+                textDescription: error.response.statusText
+            }
+        }
+    });
+});
+
 
 app.listen(port, () => {
     console.log(`Server started at: localhost://${port}`);
