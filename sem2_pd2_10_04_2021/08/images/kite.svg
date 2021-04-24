@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="96.277641mm"
-   height="99.528664mm"
-   viewBox="0 0 96.277641 99.528664"
+   width="67.394577mm"
+   height="69.670303mm"
+   viewBox="0 0 67.394577 69.670304"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="latawiec.svg">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="kite.svg">
   <defs
      id="defs2">
     <inkscape:path-effect
@@ -49,10 +49,10 @@
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1012"
+     inkscape:window-height="1080"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -73,9 +73,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(13.189654,7.0423334)">
+     transform="translate(13.189654,-22.81603)">
     <g
-       id="g980">
+       id="g980"
+       transform="matrix(0.70000236,0,0,0.70000236,-3.9568651,27.74568)">
       <path
          transform="rotate(-22.080032,12.473214,18.620535)"
          d="M 24.946429,32.416666 C 5.4357527,50.056455 16.316872,50.604426 -1.3229172,31.093749 -18.962706,11.583073 -19.510676,22.464193 -4.2863655e-7,4.8244036 19.510676,-12.815386 8.6295563,-13.363356 26.269345,6.1473203 43.909135,25.657996 44.457105,14.776877 24.946429,32.416666 Z"
