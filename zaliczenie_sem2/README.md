@@ -95,6 +95,15 @@ echo `curl --location --request DELETE 'http://localhost:4700/announcements/2'`
 
 6. [1 punkt] Aplikacja umożliwia modyfikowanie wybranego ogłoszenia
 
+```bash
+echo `curl --location --request PATCH 'http://localhost:4700/announcements/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "author": "madka polka",
+        "price": 3
+}'`
+```
+
 7. [1 punkt za każde kryterium wyszukiwania] Aplikacja pozwala na wyszukiwanie ogłoszeń według różnych kryteriów (tytuł, opis, zakres data, zakres ceny itp).
 
 8. [8 punktów] Aplikacja zapisuje ogłoszenia w bazie danych lub plikach

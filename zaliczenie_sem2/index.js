@@ -76,6 +76,19 @@ function removeNoticeFromNotices(id, notices) {
     delete notices[id];
 }
 
+/**
+ * @param {Object} fields - fields to replace in the object of id, like:
+ * {"author": "ala", "title": "ma kota"}
+ */
+function modifyNoticeFields(id, fields, notices) {
+    let noticeToModify = notices[id];
+
+    Object.keys(fields).forEach((key) => {
+        noticeToModify.setField(key, fields[key]);
+    });
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                             program execution                             //
@@ -118,6 +131,16 @@ app.delete("/announcements/:noticeId", (req, res) => {
         saveNotices(dbPath, notices);
         res.status(200);
         res.send("the announcement has been deleted");
+    })
+});
+
+app.patch("/announcements/:noticeId", (req, res) => {
+    getNotices(dbPath).then((tabNotices) => {
+        notices = tabNotices;
+        modifyNoticeFields(req.params.noticeId, req.body, notices);
+        saveNotices(dbPath, notices);
+        res.status(200);
+        res.send(`announcement ${req.params.noticeId} has been modified`);
     })
 });
 
