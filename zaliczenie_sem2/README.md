@@ -45,7 +45,17 @@ Lista funkcji:
 
 1. [1 punkt] Port z którego korzysta aplikacja powinien być ustawiany za pomocą zmiennych środowiskowych
 
+```bash
+npm run dev # default port
+# or
+PORT=9999 npm run dev # port from env variable
+```
+
 2. [1 punkt] Aplikacja na żądania wysłane pod adres `/heartbeat` odpowiada zwracając aktualną datę i godzinę
+
+```
+http://localhost:4700/heartbeat
+```
 
 3. [1 punkt] Aplikacja umożliwia dodawanie ogłoszenia
 

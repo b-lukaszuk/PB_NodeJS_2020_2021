@@ -4,8 +4,8 @@
   "description": "Node.js zaliczenie sem2 (2020/2021)",
   "main": "index.js",
   "scripts": {
-      "start": "node index",
-      "dev": "nodemon index"
+      "start": "node index.js",
+      "dev": "nodemon index.js"
   },
   "author": "Bartlomiej Lukaszuk",
   "license": "ISC",
