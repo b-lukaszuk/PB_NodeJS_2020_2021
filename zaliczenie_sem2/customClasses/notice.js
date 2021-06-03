@@ -18,57 +18,14 @@ class Notice {
         this.price = price;
     }
 
-    getId() {
-        return this._id;
+    getField(key) {
+        return this[key];
     }
 
-    getTitle() {
-        return this.title;
+    setField(key, value) {
+        this[key] = value;
     }
 
-    setTitle(title) {
-        this.title = title;
-    }
-
-    getDescription() {
-        return this.description;
-    }
-
-    setDescription(description) {
-        this.description = description;
-    }
-
-    getAuthor() {
-        return this.author;
-    }
-
-    setAuthor(author) {
-        this.author = author;
-    }
-
-    getCategory() {
-        return this.category;
-    }
-
-    setCategory(category) {
-        this.category = category;
-    }
-
-    getTags() {
-        return this.tags;
-    }
-
-    setTags(tags) {
-        this.tags = tags;
-    }
-
-    getPrice() {
-        return this.price;
-    }
-
-    setPrice(price) {
-        this.price = price;
-    }
 }
 
 module.exports = { Notice: Notice };
