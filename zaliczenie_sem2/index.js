@@ -4,11 +4,19 @@
 const express = require("express");
 const app = express();
 
+const rn = require("./readWriteNotices/readNotices.js");
+const getNotices = rn.getNotices;
+const nt = require("./customClasses/notice.js");
+const Notice = nt.Notice;
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                         global constants/variables                        //
 ///////////////////////////////////////////////////////////////////////////////
 const PORT = process.env.PORT || 4700;
+const dbPath = "./noticesDb/notices.json";
+
+let notices = [];
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,6 +44,26 @@ app.get("/", (req, res) => {
 
 app.get("/heartbeat", (req, res) => {
     res.send(nowDateTime());
+});
+
+app.get("/notices", (req, res) => {
+    getNotices(dbPath).then((tabNotices) => {
+        notices = tabNotices;
+        res.send(notices);
+    })
+});
+
+app.get("/notices/:noticeId", (req, res) => {
+    getNotices(dbPath).then((tabNotices) => {
+        notices = tabNotices;
+        let notice = notices[req.params.noticeId];
+        if (notice === undefined) {
+            res.status(404);
+            res.send(`No announcement with id: ${req.params.noticeId}`);
+        } else {
+            res.send(notices[req.params.noticeId]);
+        }
+    })
 });
 
 app.listen(PORT, () => {
