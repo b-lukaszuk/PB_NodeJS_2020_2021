@@ -54,12 +54,20 @@ PORT=9999 npm run dev # port from env variable
 2. [1 punkt] Aplikacja na żądania wysłane pod adres `/heartbeat` odpowiada zwracając aktualną datę i godzinę
 
 ```
+# w przegladarce
 http://localhost:4700/heartbeat
 ```
 
 3. [1 punkt] Aplikacja umożliwia dodawanie ogłoszenia
 
 4. [2 punkty] Aplikacja umożliwia zwracanie wszystkich ogłoszeń oraz pojedynczego ogłoszenia
+
+```
+# w przegladarce
+http://localhost:4700/announcements
+# or
+http://localhost:4700/announcements/1
+```
 
 5. [1 punkt] Aplikacja umożliwia usuwanie wybranego ogłoszenia
 
