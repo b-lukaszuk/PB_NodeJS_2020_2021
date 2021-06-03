@@ -54,18 +54,37 @@ PORT=9999 npm run dev # port from env variable
 2. [1 punkt] Aplikacja na żądania wysłane pod adres `/heartbeat` odpowiada zwracając aktualną datę i godzinę
 
 ```bash
-echo `curl http://localhost:4700/heartbeat`
+echo `curl --location --request GET http://localhost:4700/heartbeat`
 ```
 
 3. [1 punkt] Aplikacja umożliwia dodawanie ogłoszenia
 
+```bash
+echo `curl --location --request POST 'http://localhost:4700/announcements/add' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "title": "test",
+        "description": "test test",
+        "author": "test test",
+        "category": "test",
+        "tags": [
+            "test",
+            "test2"
+        ],
+        "price": 3
+    }'`
+```
+
 4. [2 punkty] Aplikacja umożliwia zwracanie wszystkich ogłoszeń oraz pojedynczego ogłoszenia
 
 ```bash
-# w przegladarce
-echo `curl http://localhost:4700/announcements`
+echo `curl --location --request GET 'http://localhost:4700/announcements' \
+--header 'Content-Type: application/json'`
+
 # or
-echo `curl http://localhost:4700/announcements/1`
+
+echo `curl --location --request GET 'http://localhost:4700/announcements/1' \
+--header 'Content-Type: application/json'`
 ```
 
 5. [1 punkt] Aplikacja umożliwia usuwanie wybranego ogłoszenia
