@@ -71,6 +71,11 @@ function addNotice(obj, notices) {
     notices[freeId] = objToNotice(parseInt(freeId), obj);
 }
 
+function removeNoticeFromNotices(id, notices) {
+    console.log(typeof id);
+    delete notices[id];
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                             program execution                             //
@@ -103,6 +108,16 @@ app.get("/announcements/:noticeId", (req, res) => {
         } else {
             res.send(notices[req.params.noticeId]);
         }
+    })
+});
+
+app.delete("/announcements/:noticeId", (req, res) => {
+    getNotices(dbPath).then((tabNotices) => {
+        notices = tabNotices;
+        removeNoticeFromNotices(req.params.noticeId, notices);
+        saveNotices(dbPath, notices);
+        res.status(200);
+        res.send("the announcement has been deleted");
     })
 });
 

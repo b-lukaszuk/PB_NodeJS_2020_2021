@@ -89,6 +89,10 @@ echo `curl --location --request GET 'http://localhost:4700/announcements/1' \
 
 5. [1 punkt] Aplikacja umożliwia usuwanie wybranego ogłoszenia
 
+```bash
+echo `curl --location --request DELETE 'http://localhost:4700/announcements/2'`
+```
+
 6. [1 punkt] Aplikacja umożliwia modyfikowanie wybranego ogłoszenia
 
 7. [1 punkt za każde kryterium wyszukiwania] Aplikacja pozwala na wyszukiwanie ogłoszeń według różnych kryteriów (tytuł, opis, zakres data, zakres ceny itp).
