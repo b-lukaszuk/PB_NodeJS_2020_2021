@@ -1,4 +1,1 @@
-{
-    "0": {"title": "sprzedam opla", "description": "dobry opel tanio", "author": "Janusz Biznesu", "category": "samochody", "tags": ["auto", "opel", "sprzedam", "tanio", "silnik igla"], "price": "10000"},
-    "1": {"title": "sprzedam wozek dzieciecy", "description": "sprzedam wozek dzieciecy dla dziecka do lat 2", "author": "pewna mama", "category": "wozek dzieciecy", "tags": ["wozek dzieciecy", "tanio"], "price": "800"}
-}
+{"0":{"id":0,"title":"sprzedam opla","description":"dobry opel tanio","author":"Janusz Biznesu","category":"samochody","tags":["auto","opel","sprzedam","tanio","silnik igla"],"price":10000},"1":{"id":1,"title":"sprzedam wozek dzieciecy","description":"sprzedam wozek dzieciecy dla dziecka do lat 2","author":"pewna mama","category":"wozek dzieciecy","tags":["wozek dzieciecy","tanio"],"price":800},"2":{"id":2,"title":"test","description":"test test","author":"test test","category":"test","tags":["test","silnik igla"],"price":3}}

@@ -14,7 +14,7 @@ const Notice = nt.Notice;
  */
 function objToNotice(id, obj) {
     return new Notice(parseInt(id), obj.title, obj.description, obj.author,
-        obj.category, obj.tags, obj.price);
+        obj.category, obj.tags, parseFloat(obj.price));
 }
 
 /**
