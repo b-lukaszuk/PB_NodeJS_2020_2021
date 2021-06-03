@@ -99,7 +99,7 @@ app.get("/announcements/:noticeId", (req, res) => {
         let notice = notices[req.params.noticeId];
         if (notice === undefined) {
             res.status(404);
-            res.send(`No announcement with id: ${req.params.noticeId}`);
+            res.send(`Announcement #${req.params.noticeId} was not found`);
         } else {
             res.send(notices[req.params.noticeId]);
         }
