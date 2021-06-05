@@ -158,5 +158,5 @@ app.post("/announcements/add", (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server started at: localhost://${PORT}`);
+    console.log(`Server started on port localhost://${PORT}`);
 })
