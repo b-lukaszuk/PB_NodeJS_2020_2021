@@ -46,7 +46,7 @@ Lista funkcji:
 1. [1 punkt] Port z którego korzysta aplikacja powinien być ustawiany za pomocą zmiennych środowiskowych
 
 ```bash
-npm run dev # default port
+npm run dev # default port (read from sample.env file)
 # or
 PORT=9999 npm run dev # port from env variable
 ```
