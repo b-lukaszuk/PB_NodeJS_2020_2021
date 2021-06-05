@@ -1,6 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                  imports                                  //
 ///////////////////////////////////////////////////////////////////////////////
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config({ path: "./sample.env" });
+}
+
 const express = require("express");
 const app = express();
 
@@ -19,7 +23,7 @@ const saveNotices = wn.saveNotices;
 ///////////////////////////////////////////////////////////////////////////////
 //                         global constants/variables                        //
 ///////////////////////////////////////////////////////////////////////////////
-const PORT = process.env.PORT || 4700;
+const PORT = process.env.PORT || 4701;
 const dbPath = "./noticesDb/notices.json";
 
 let notices = [];
