@@ -108,6 +108,11 @@ echo `curl --location --request PATCH 'http://localhost:4700/announcements/1' \
 
 8. [8 punktów] Aplikacja zapisuje ogłoszenia w bazie danych lub plikach
 
+```bash
+# see pseudoDB (so file)
+cat noticesDb/notices.json
+```
+
 9. [2 punkty] Usuwanie i modyfikowanie ogłoszeń jest zabezpieczone hasłem (np. middleware weryfikujące hasło), przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
 
 10. [4 punkty] Aplikacja ma 3 zdefiniowanych na stałe użytkowników, każdy z nich może usuwać i modyfikować tylko te ogłoszenia które sam dodał, przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
