@@ -57,15 +57,21 @@ function removeNoticeFromNotices(id, notices) {
     delete notices[id];
 }
 
-function objFillsRequirementsOfNotice(obj) {
+/**
+ * returns a list of fields that are missing in object
+ * @param {Object} obj - inline object, e.g. {"author": "xxx", "title": "yyy"}
+ * @returns {retValType} retValDescription
+ */
+function missingFieldsToBeNotice(obj) {
     let reqFields = ["title", "description",
         "author", "category", "tags", "price"];
+    let missingFields = [];
     for (let i = 0; i < reqFields.length; i++) {
         if (obj[reqFields[i]] === undefined) {
-            return false;
+            missingFields.push(reqFields[i]);
         }
     }
-    return true;
+    return missingFields;
 }
 
 /**
@@ -153,7 +159,8 @@ router.patch("/:noticeId", (req, res) => {
 router.post("/add", (req, res) => {
     getNotices(dbPath).then((theNotices) => {
         notices = theNotices;
-        if (objFillsRequirementsOfNotice(req.body)) {
+        let missingFields = missingFieldsToBeNotice(req.body);
+        if (missingFields.length === 0) {
             addNotice(req.body, notices);
             saveNotices(dbPath, notices);
             res
@@ -162,7 +169,10 @@ router.post("/add", (req, res) => {
         } else {
             res
                 .status(400)
-                .json({ "msg": "object does not have all the required fields" });
+                .json({
+                    "msg": "object does not have all the required fields",
+                    "missingFields": missingFields
+                });
         }
     })
 });
