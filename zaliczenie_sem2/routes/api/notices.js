@@ -165,7 +165,7 @@ router.post("/add", (req, res) => {
             saveNotices(dbPath, notices);
             res
                 .status(201)
-                .json({ "msg": "posted object has been added to the database" });
+                .json({ "msg": "posted object was added to the database" });
         } else {
             res
                 .status(400)
