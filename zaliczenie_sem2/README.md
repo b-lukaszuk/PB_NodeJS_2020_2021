@@ -54,24 +54,21 @@ PORT=9999 npm run dev # port from env variable
 2. [1 punkt] Aplikacja na żądania wysłane pod adres `/heartbeat` odpowiada zwracając aktualną datę i godzinę
 
 ```bash
-echo `curl --location --request GET http://localhost:4700/heartbeat`
+echo `curl --location --request GET 'http://localhost:4700/heartbeat'`
 ```
 
 3. [1 punkt] Aplikacja umożliwia dodawanie ogłoszenia
 
 ```bash
-echo `curl --location --request POST 'http://localhost:4700/api/adds/add' \
+echo `curl --location --request POST 'http://localhost:4700/api/adds/addNew' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-        "title": "test1",
+        "category": "zabawka",
         "description": "test test",
         "author": "test test",
-        "category": "test",
-        "tags": [
-            "test",
-            "silnik igla"
-        ],
-        "price": 3
+        "tags": ["test"],
+        "price": 333,
+        "title": "zabawka"
 }'`
 ```
 
@@ -108,6 +105,8 @@ echo `curl --location --request PATCH 'http://localhost:4700/api/adds/1' \
 
 ```bash
 # simple (single) querries like:
+echo `curl --location --request GET 'http://localhost:4700/api/adds?id=0'`
+# or
 echo `curl --location --request GET 'http://localhost:4700/api/adds?title=sprzedam'`
 # or
 echo `curl --location --request GET 'http://localhost:4700/api/adds?description=tanio'`
