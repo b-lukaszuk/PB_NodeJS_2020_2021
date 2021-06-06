@@ -60,7 +60,7 @@ echo `curl --location --request GET http://localhost:4700/heartbeat`
 3. [1 punkt] Aplikacja umożliwia dodawanie ogłoszenia
 
 ```bash
-echo `curl --location --request POST 'http://localhost:4700/api/notices/add' \
+echo `curl --location --request POST 'http://localhost:4700/api/adds/add' \
 --header 'Content-Type: application/json' \
 --data-raw '{
         "title": "test1",
@@ -78,23 +78,23 @@ echo `curl --location --request POST 'http://localhost:4700/api/notices/add' \
 4. [2 punkty] Aplikacja umożliwia zwracanie wszystkich ogłoszeń oraz pojedynczego ogłoszenia
 
 ```bash
-echo `curl --location --request GET 'http://localhost:4700/api/notices'`
+echo `curl --location --request GET 'http://localhost:4700/api/adds'` # displays all adds
 # or
-echo `curl --location --request GET 'http://localhost:4700/api/notices/0'`
+echo `curl --location --request GET 'http://localhost:4700/api/adds/0'` # displays choosen add w w
 ```
 
 5. [1 punkt] Aplikacja umożliwia usuwanie wybranego ogłoszenia
 
 ```bash
-echo `curl --location --request DELETE 'http://localhost:4700/api/notices'` # deletes all notices
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds'` # deletes all adds
 # or
-echo `curl --location --request DELETE 'http://localhost:4700/api/notices/2'` # deltes choosen notice
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds/2'` # deltes choosen add
 ```
 
 6. [1 punkt] Aplikacja umożliwia modyfikowanie wybranego ogłoszenia
 
 ```bash
-echo `curl --location --request PATCH 'http://localhost:4700/api/notices/1' \
+echo `curl --location --request PATCH 'http://localhost:4700/api/adds/1' \
 --header 'Content-Type: application/json' \
 --data-raw '{
         "author": "madka polka",
@@ -108,7 +108,7 @@ echo `curl --location --request PATCH 'http://localhost:4700/api/notices/1' \
 
 ```bash
 # see pseudoDB (so file)
-cat noticesDb/notices.json
+cat addsDb/adds.json
 ```
 
 9. [2 punkty] Usuwanie i modyfikowanie ogłoszeń jest zabezpieczone hasłem (np. middleware weryfikujące hasło), przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
