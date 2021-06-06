@@ -75,6 +75,18 @@ function removeNoticeFromNotices(id, notices) {
     delete notices[id];
 }
 
+function objFillsRequirementsOfNotice(obj) {
+    let reqFields = ["title", "description",
+        "author", "category", "tags", "price"];
+    for (let i = 0; i < reqFields.length; i++) {
+        if (obj[reqFields[i]] === undefined) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 /**
  * @param {Object} fields - fields to replace in the object of id, like:
  * {"author": "ala", "title": "ma kota"}
@@ -161,12 +173,18 @@ app.patch("/notices/:noticeId", (req, res) => {
 app.post("/notices/add", (req, res) => {
     getNotices(dbPath).then((theNotices) => {
         notices = theNotices;
-        addNotice(req.body, notices);
-        saveNotices(dbPath, notices);
+        if (objFillsRequirementsOfNotice(req.body)) {
+            addNotice(req.body, notices);
+            saveNotices(dbPath, notices);
+            res
+                .status(201)
+                .json({ "msg": "posted object has been added to the database" });
+        } else {
+            res
+                .status(400)
+                .json({ "msg": "object does not have all the required fields" });
+        }
     })
-    res
-        .status(201)
-        .json({ "msg": "posted object has been added to the database" });
 });
 
 app.listen(PORT, () => {

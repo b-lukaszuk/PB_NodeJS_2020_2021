@@ -25,7 +25,6 @@ class Notice {
     setField(key, value) {
         this[key] = value;
     }
-
 }
 
 module.exports = { Notice: Notice };
