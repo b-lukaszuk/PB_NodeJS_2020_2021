@@ -80,7 +80,9 @@ echo `curl --location --request POST 'http://localhost:4700/api/adds/add' \
 ```bash
 echo `curl --location --request GET 'http://localhost:4700/api/adds'` # displays all adds
 # or
-echo `curl --location --request GET 'http://localhost:4700/api/adds/0'` # displays choosen add w w
+echo `curl --location --request GET 'http://localhost:4700/api/adds/0'` # displays choosen add
+# or
+echo `curl --location --request GET 'http://localhost:4700/api/adds?id=0'` # displays choosen add
 ```
 
 5. [1 punkt] Aplikacja umożliwia usuwanie wybranego ogłoszenia
@@ -103,6 +105,19 @@ echo `curl --location --request PATCH 'http://localhost:4700/api/adds/1' \
 ```
 
 7. [1 punkt za każde kryterium wyszukiwania] Aplikacja pozwala na wyszukiwanie ogłoszeń według różnych kryteriów (tytuł, opis, zakres data, zakres ceny itp).
+
+```bash
+# simple (single) querries like:
+echo `curl --location --request GET 'http://localhost:4700/api/adds?title=sprzedam'`
+# or
+echo `curl --location --request GET 'http://localhost:4700/api/adds?description=tanio'`
+# or
+echo `curl --location --request GET 'http://localhost:4700/api/adds?category=dzieciecy'`
+# or
+echo `curl --location --request GET 'http://localhost:4700/api/adds?tags=igla'`
+# or
+echo `curl --location --request GET 'http://localhost:4700/api/adds?price=300&price=900'`
+```
 
 8. [8 punktów] Aplikacja zapisuje ogłoszenia w bazie danych lub plikach
 

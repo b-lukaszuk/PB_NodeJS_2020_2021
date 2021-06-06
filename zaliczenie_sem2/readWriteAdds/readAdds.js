@@ -19,17 +19,19 @@ function objToAdd(id, obj) {
 
 /**
  * returns an array of Add objects
- * @param {Object} dbAdds database in the form of
- * { 0: { title: "xxx1", author: "yyy1", etc. },
- * 1: { title: "xxx1", author: "yyy2", etc. } }
- * @return {Object} dictionary of adds {"id1": add1, "id2": add2}
+ * @param {Object[]} dbAdds database in the form of:
+ * [
+ * { title: "xxx1", author: "yyy1", etc. },
+ * { title: "xxx1", author: "yyy2", etc. } 
+ * ] 
+* @return {Add[]} array of adds [add1, add2, add3]
  */
-function jsonToDictOfAdds(dbAdds) {
-    let objAdds = {};
-    Object.keys(dbAdds).forEach((key) => {
-        objAdds[key] = objToAdd(key, dbAdds[key]);
-    });
-    return objAdds;
+function tabObjsToTabAdds(tabObjs) {
+    let tabAdds = [];
+    for (let obj of tabObjs) {
+        tabAdds.push(objToAdd(obj.id, obj))
+    }
+    return tabAdds;
 }
 
 /**
@@ -46,8 +48,8 @@ function getAdds(path) {
             if (err) {
                 reject(err);
             } else {
-                const readData = JSON.parse(data);
-                resolve(jsonToDictOfAdds(readData));
+                const dataFromDb = JSON.parse(data);
+                resolve(tabObjsToTabAdds(dataFromDb));
             }
         });
     });

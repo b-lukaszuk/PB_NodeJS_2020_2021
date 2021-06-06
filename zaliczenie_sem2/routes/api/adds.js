@@ -24,11 +24,11 @@ const dbPath = "./addsDb/adds.json";
 ///////////////////////////////////////////////////////////////////////////////
 function getFieldsValues(adds, keyOfAddObj) {
     let fields = [];
-    Object.keys(adds).forEach((key) => {
-        let field = adds[key].getField(keyOfAddObj);
+    for (let anAdd of adds) {
+        let field = anAdd.getField(keyOfAddObj);
         fields.push(field);
-    });
-    return fields
+    }
+    return fields;
 }
 
 function getFirstFreeId(adds) {
@@ -38,23 +38,33 @@ function getFirstFreeId(adds) {
 
 /**
  * changes inline object, like {title: "xxx", author: "yyy", etc.}
- * to object of class add
+ * to object of class Add
  * @param {number} id - id of a add
  * @param {Object} obj inline postaci {title: "xxx", author: "yyy", etc.}
  * @return {Object<Add>} object of class add
  */
 function objToAdd(id, obj) {
     return new Add(parseInt(id), obj.title, obj.description, obj.author,
-        obj.category, obj.tags, parseFloat(obj.price));
+        obj.category, obj.tags, parseInt(obj.price));
 }
 
-function addAdd(obj, adds) {
+/**
+ * adds inline object, like {title: "xxx", author: "yyy", etc.}
+ * first converts it to object of class Add
+ * @param {Object} obj inline object like {title: "xxx", author: "yyy"} to add
+ * @param {Add[]} adds previous array of objects of class Add
+ * @returns {Add[]} adds with new object added
+ */
+function addObjToAdds(obj, adds) {
+    let result = [...adds];
     let freeId = getFirstFreeId(adds);
-    adds[freeId] = objToAdd(parseInt(freeId), obj);
+    result.push(objToAdd(freeId, obj));
+    return result;
 }
 
 function removeAddFromAdds(id, adds) {
-    delete adds[id];
+    let result = adds.filter((add) => { return add.id !== parseInt(id) });
+    return result;
 }
 
 /**
@@ -77,14 +87,67 @@ function missingFieldsToBeAdd(obj) {
 /**
  * @param {Object} fields - fields to replace in the object of id, like:
  * {"author": "ala", "title": "ma kota"}
+ * @returns {Add[]} - adds with the one looked for modified
  */
 function modifyAddFields(id, fields, adds) {
-    let addToModify = adds[id];
-
-    Object.keys(fields).forEach((key) => {
-        addToModify.setField(key, fields[key]);
-    });
+    let result = [...adds];
+    for (let add of result) {
+        if (add.id === parseInt(id)) {
+            Object.keys(fields).forEach((key) => {
+                add.setField(key, fields[key]);
+            });
+        }
+    }
+    return result;
 }
+
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+
+/**
+ * returns notices that satisfy condition
+ * @param {string} field name of field from object of class Add
+ * @param {number|string} value - to be contained in the field (see above)
+ * @param {Add[]} adds array of objects of class Add to filter
+ * @returns {Add[]} - filtered adds
+ */
+function getAddsWhereFieldContains(field, value, adds) {
+    let result = [];
+    for (let anAdd of adds) {
+        if (typeof anAdd[field] === "string") {
+            if (anAdd[field].toLocaleLowerCase().includes(
+                value.toLocaleLowerCase())) {
+                result.push(anAdd);
+            }
+        }
+        if (typeof anAdd[field] === "number") {
+            if (anAdd[field] === parseInt(value)) {
+                result.push(anAdd);
+            }
+        }
+        if (anAdd[field] instanceof Array) {
+            let lowercasedTags = anAdd[field].map((tag) => tag.toLocaleLowerCase());
+            for (let tag of lowercasedTags) {
+                if (tag.includes(value.toLocaleLowerCase())) {
+                    result.push(anAdd);
+                    break;
+                }
+            }
+        }
+    }
+    return result;
+}
+
+function isBetween(numToCompare, minIncl, maxIncl) {
+    return (numToCompare >= minIncl) && (numToCompare <= maxIncl);
+}
+
+function getAddsWithPriceBetween(minIncl, maxIncl, adds) {
+    return adds.filter(
+        (add) => { return isBetween(add.price, minIncl, maxIncl) });
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,7 +159,20 @@ function modifyAddFields(id, fields, adds) {
 router.get("/", (req, res) => {
     getAdds(dbPath).then((theAdds) => {
         adds = theAdds;
-        res.json(adds);
+        if (!isEmpty(req.query)) {
+            let queryField = Object.keys(req.query)[0];
+            let queryValue = req.query[queryField];
+            if (queryField === "price") {
+                adds = getAddsWithPriceBetween(...queryValue, adds);
+            } else {
+                adds = getAddsWhereFieldContains(queryField, queryValue, adds);
+            }
+        }
+        if (adds.length !== 0) {
+            res.json(adds);
+        } else {
+            res.send("No adds found");
+        }
     })
 });
 
@@ -110,9 +186,10 @@ router.delete("/", (req, res) => {
 
 router.get("/:addId", (req, res) => {
     getAdds(dbPath).then((theAdds) => {
-        let add = theAdds[req.params.addId];
-        if (add !== undefined) {
-            res.json(add);
+        adds = theAdds;
+        adds = getAddsWhereFieldContains("id", req.params.addId, adds)
+        if (adds.length !== 0) {
+            res.json(adds);
         } else {
             res
                 .status(400)
@@ -122,10 +199,10 @@ router.get("/:addId", (req, res) => {
 });
 
 router.delete("/:addId", (req, res) => {
-    getAdds(dbPath).then((tabAdds) => {
-        let add = tabAdds[req.params.addId];
-        if (add !== undefined) {
-            removeAddFromAdds(req.params.addId, adds);
+    getAdds(dbPath).then((theAdds) => {
+        let availableIds = getFieldsValues(theAdds, "id");
+        if (availableIds.includes(parseInt(req.params.addId))) {
+            adds = removeAddFromAdds(req.params.addId, adds);
             saveAdds(dbPath, adds);
             res
                 .status(200)
@@ -140,10 +217,10 @@ router.delete("/:addId", (req, res) => {
 
 router.patch("/:addId", (req, res) => {
     getAdds(dbPath).then((theAdds) => {
-        adds = theAdds;
-        let add = theAdds[req.params.addId];
-        if (add !== undefined) {
-            modifyAddFields(req.params.addId, req.body, adds);
+        let availableIds = getFieldsValues(theAdds, "id");
+        if (availableIds.includes(parseInt(req.params.addId))) {
+            adds = theAdds;
+            adds = modifyAddFields(req.params.addId, req.body, adds);
             saveAdds(dbPath, adds);
             res
                 .status(200)
@@ -161,7 +238,7 @@ router.post("/addNew", (req, res) => {
         adds = theAdds;
         let missingFields = missingFieldsToBeAdd(req.body);
         if (missingFields.length === 0) {
-            addAdd(req.body, adds);
+            adds = addObjToAdds(req.body, adds);
             saveAdds(dbPath, adds);
             res
                 .status(201)

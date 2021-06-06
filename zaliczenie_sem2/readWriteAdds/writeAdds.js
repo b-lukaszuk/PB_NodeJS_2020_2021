@@ -6,15 +6,14 @@ const nt = require("../customClasses/add.js");
 const Add = nt.Add;
 
 /**
- * writes down dictionary of Add objects to file
- * { "0": { "id": 0, title: "xxx1", author: "yyy1", etc. },
- * "1": {"id": 1, title: "xxx1", author: "yyy2", etc. } }
+ * writes down array of Add objects to a file with the content like:
+ * [ { "id": 0, title: "xxx1", author: "yyy1", etc. },
+ * {"id": 1, title: "xxx1", author: "yyy2", etc. } ]
  * @param {string} path - where to write the dictionary
- * @param {Object}  dictAdds - dictionary of Add
- * @return {string} blad lub komunikat o zapisie danych do pliku (console.log())
+ * @param {Add[]}  tabAdds - array of Add
  */
-function saveAdds(path, dictAdds) {
-    let adds = JSON.stringify(dictAdds);
+function saveAdds(path, tabAdds) {
+    let adds = JSON.stringify(tabAdds);
     return new Promise((resolve, reject) => {
         fs.writeFile(path, adds, (err, data) => {
             if (err) {

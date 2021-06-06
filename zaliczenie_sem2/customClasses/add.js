@@ -1,7 +1,7 @@
 class Add {
 
     /**
-     * @param {number} id
+     * @param {number} id - private - set by the system (see adds.js in routes)
      * @param {string} title
      * @param {string} description
      * @param {string} category
