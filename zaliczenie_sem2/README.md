@@ -60,31 +60,27 @@ echo `curl --location --request GET http://localhost:4700/heartbeat`
 3. [1 punkt] Aplikacja umożliwia dodawanie ogłoszenia
 
 ```bash
-echo `curl --location --request POST 'http://localhost:4700/announcements/add' \
+echo `curl --location --request POST 'http://localhost:4700/notices/add' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-        "title": "test",
+        "title": "test1",
         "description": "test test",
         "author": "test test",
         "category": "test",
         "tags": [
             "test",
-            "test2"
+            "silnik igla"
         ],
         "price": 3
-    }'`
+}'`
 ```
 
 4. [2 punkty] Aplikacja umożliwia zwracanie wszystkich ogłoszeń oraz pojedynczego ogłoszenia
 
 ```bash
-echo `curl --location --request GET 'http://localhost:4700/announcements' \
---header 'Content-Type: application/json'`
-
+echo `curl --location --request GET 'http://localhost:4700/notices'`
 # or
-
-echo `curl --location --request GET 'http://localhost:4700/announcements/1' \
---header 'Content-Type: application/json'`
+echo `curl --location --request GET 'http://localhost:4700/notices/0'`
 ```
 
 5. [1 punkt] Aplikacja umożliwia usuwanie wybranego ogłoszenia
@@ -96,7 +92,7 @@ echo `curl --location --request DELETE 'http://localhost:4700/announcements/2'`
 6. [1 punkt] Aplikacja umożliwia modyfikowanie wybranego ogłoszenia
 
 ```bash
-echo `curl --location --request PATCH 'http://localhost:4700/announcements/1' \
+echo `curl --location --request PATCH 'http://localhost:4700/notices/1' \
 --header 'Content-Type: application/json' \
 --data-raw '{
         "author": "madka polka",

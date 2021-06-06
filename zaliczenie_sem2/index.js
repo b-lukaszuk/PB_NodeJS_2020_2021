@@ -1,28 +1,24 @@
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //                                  imports                                  //
 ///////////////////////////////////////////////////////////////////////////////
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config({ path: "./sample.env" });
-}
-
 const express = require("express");
 const app = express();
 
 // read notices
-const rn = require("./readWriteNotices/readNotices.js");
-const getNotices = rn.getNotices;
+const getNotices = require("./readWriteNotices/readNotices.js").getNotices;
 
-const nt = require("./customClasses/notice.js");
-const Notice = nt.Notice;
+const Notice = require("./customClasses/notice.js").Notice;
 
 // write notices
-const wn = require("./readWriteNotices/writeNotices.js");
-const saveNotices = wn.saveNotices;
+const saveNotices = require("./readWriteNotices/writeNotices.js").saveNotices;
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                         global constants/variables                        //
 ///////////////////////////////////////////////////////////////////////////////
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config({ path: "./sample.env" });
+}
 const PORT = process.env.PORT || 4701;
 const dbPath = "./noticesDb/notices.json";
 
@@ -76,7 +72,6 @@ function addNotice(obj, notices) {
 }
 
 function removeNoticeFromNotices(id, notices) {
-    console.log(typeof id);
     delete notices[id];
 }
 
@@ -108,53 +103,70 @@ app.get("/heartbeat", (req, res) => {
     res.send(nowDateTime());
 });
 
-app.get("/announcements", (req, res) => {
-    getNotices(dbPath).then((tabNotices) => {
-        notices = tabNotices;
-        res.send(notices);
+app.get("/notices", (req, res) => {
+    getNotices(dbPath).then((theNotices) => {
+        notices = theNotices;
+        res.json(notices);
     })
 });
 
-app.get("/announcements/:noticeId", (req, res) => {
-    getNotices(dbPath).then((tabNotices) => {
-        notices = tabNotices;
-        let notice = notices[req.params.noticeId];
-        if (notice === undefined) {
-            res.status(404);
-            res.send(`Announcement #${req.params.noticeId} was not found`);
+app.get("/notices/:noticeId", (req, res) => {
+    getNotices(dbPath).then((theNotices) => {
+        let notice = theNotices[req.params.noticeId];
+        if (notice !== undefined) {
+            res.json(notice);
         } else {
-            res.send(notices[req.params.noticeId]);
+            res
+                .status(400)
+                .json({ "msg": `Notice of id: ${req.params.noticeId} not found` });
         }
     })
 });
 
-app.delete("/announcements/:noticeId", (req, res) => {
+app.delete("/notices/:noticeId", (req, res) => {
     getNotices(dbPath).then((tabNotices) => {
-        notices = tabNotices;
-        removeNoticeFromNotices(req.params.noticeId, notices);
-        saveNotices(dbPath, notices);
-        res.status(200);
-        res.send("the announcement has been deleted");
+        let notice = tabNotices[req.params.noticeId];
+        if (notice !== undefined) {
+            removeNoticeFromNotices(req.params.noticeId, notices);
+            saveNotices(dbPath, notices);
+            res
+                .status(200)
+                .json({ "msg": `Notice of id: ${req.params.noticeId} deleted` });
+        } else {
+            res
+                .status(400)
+                .json({ "msg": `Notice of id: ${req.params.noticeId} not found` });
+        }
     })
 });
 
-app.patch("/announcements/:noticeId", (req, res) => {
-    getNotices(dbPath).then((tabNotices) => {
-        notices = tabNotices;
-        modifyNoticeFields(req.params.noticeId, req.body, notices);
-        saveNotices(dbPath, notices);
-        res.status(200);
-        res.send(`announcement ${req.params.noticeId} has been modified`);
+app.patch("/notices/:noticeId", (req, res) => {
+    getNotices(dbPath).then((theNotices) => {
+        notices = theNotices;
+        let notice = theNotices[req.params.noticeId];
+        if (notice !== undefined) {
+            modifyNoticeFields(req.params.noticeId, req.body, notices);
+            saveNotices(dbPath, notices);
+            res
+                .status(200)
+                .json({ "msg": `Notice ${req.params.noticeId} was modified` });
+        } else {
+            res
+                .status(400)
+                .json({ "msg": `Notice of id: ${req.params.noticeId} not found` });
+        }
     })
 });
 
-app.post("/announcements/add", (req, res) => {
-    getNotices(dbPath).then((tabNotices) => {
-        notices = tabNotices;
+app.post("/notices/add", (req, res) => {
+    getNotices(dbPath).then((theNotices) => {
+        notices = theNotices;
         addNotice(req.body, notices);
         saveNotices(dbPath, notices);
     })
-    res.status(201).send("posted object has been added");
+    res
+        .status(201)
+        .json({ "msg": "posted object has been added to the database" });
 });
 
 app.listen(PORT, () => {

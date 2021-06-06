@@ -20,7 +20,7 @@ function saveNotices(path, dictNotices) {
             if (err) {
                 reject(err);
             } else {
-                console.log("\nData saved to file: " + path);
+                resolve("\nData saved to file: " + path);
             }
         });
     });
