@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 const express = require("express");
 const app = express();
+const path = require("path");
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,19 +23,16 @@ const PORT = process.env.PORT || 4701;
 ///////////////////////////////////////////////////////////////////////////////
 //                             program execution                             //
 ///////////////////////////////////////////////////////////////////////////////
+// set static folder
+app.use(express.static(path.join(__dirname, "public")));
+
 // allowing for json post-s
 app.use(express.json({ extended: true }));
 
 // using routes
-app.use("/api/notices", require("./routes/api/notices.js"));
+app.use("/api/adds", require("./routes/api/adds.js"));
 
 app.use("/heartbeat", require("./routes/heartbeat.js"));
-
-app.get("/", (req, res) => {
-    res.send("Hello there!");
-});
-
-
 
 app.listen(PORT, () => {
     console.log(`Server started on port localhost://${PORT}`);

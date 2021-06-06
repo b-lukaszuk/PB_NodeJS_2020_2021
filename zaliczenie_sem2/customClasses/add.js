@@ -1,4 +1,4 @@
-class Notice {
+class Add {
 
     /**
      * @param {number} id
@@ -27,4 +27,4 @@ class Notice {
     }
 }
 
-module.exports = { Notice: Notice };
+module.exports = { Add: Add };
