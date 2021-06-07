@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const fs = require("fs");
+const { getAdds } = require("./readWriteAdds/readAdds.js");
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -67,6 +68,12 @@ function pageNotFoundMiddleware(req, res, next) {
     next();
 }
 
+function errorHandlingMiddleware(error, req, res, next) {
+    console.log(error.message); // wymagane, moze chodzilo o log.txt?
+    res.status(500);
+    res.json({ error: { message: error.message } });
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -85,8 +92,15 @@ app.use("/api/adds", require("./routes/api/adds.js"));
 
 app.use("/heartbeat", require("./routes/heartbeat.js"));
 
+app.get("/error", (req, res) => {
+    // getAdds("tomek");
+    throw new Error("serwer error (generated for test purposes)");
+});
+
 app.use("*", pageNotFoundMiddleware,
     express.static(path.join(__dirname, "public/pageNotFound.html")));
+
+app.use(errorHandlingMiddleware);
 
 app.listen(PORT, () => {
     console.log(`Server started on port localhost://${PORT}`);

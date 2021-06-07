@@ -202,7 +202,11 @@ npm run start debug # i teraz nalezy uzywac normalnie
 
 12. [2 punkty] Aplikacja po odebraniu żądania do adresu który nie istnieje powinna zwracać statyczny obrazek zamiast domyślnej strony błędu 404
 
+> wystarczy wpisac, np. localhost:4700/xyz
+
 13. [2 punkty] W przypadku wystąpienia błędów aplikacji, szczegóły błędu zapisywane są w console.log a użytkownik dostaje stosowny komunikat i kod odpowiedzi HTTP
+
+> wystarczy wpisac, np. localhost:4700/error
 
 14. [+15% do już uzyskanych punktów] Aplikacja jest udokumentowana za pomocą Postmana - kolekcja zawierająca przykłady żądań do wszystkich przygotowanych funkcji
 
