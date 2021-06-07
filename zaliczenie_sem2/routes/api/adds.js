@@ -19,6 +19,9 @@ const saveAdds = require("../../readWriteAdds/writeAdds.js").saveAdds;
 let adds = [];
 const dbPath = "./addsDb/adds.json";
 
+const users = ["admin", "ala", "adam"];
+Object.freeze(users);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 functions                                 //
@@ -149,7 +152,11 @@ function getAddsWithPriceBetween(minIncl, maxIncl, adds) {
         (add) => { return isBetween(add.price, minIncl, maxIncl) });
 }
 
-function authorisationMiddleware(req, res, next) {
+
+///////////////////////////////////////////////////////////////////////////////
+//                                 middleware                              //
+///////////////////////////////////////////////////////////////////////////////
+function verifyPasswordMiddleware(req, res, next) {
     if (req.headers.password === undefined) {
         res.status(401).json({ "msg": "authorization by password required" });
     } else if (req.headers.password === "1234") {
@@ -158,6 +165,31 @@ function authorisationMiddleware(req, res, next) {
         res.status(401).json({ "msg": "incorrect password, try again" });
     }
 }
+
+async function verifyUserMiddleware(req, res, next) {
+    let user = req.headers.user;
+    if (!users.includes(user)) {
+        res.status(401).json({ "msg": "unknown user" });
+    } else {
+        adds = await getAdds(dbPath);
+        if (user === "admin") {
+            next();
+        } else if (req.params.addId === undefined) {
+            res.status(401).json({ "msg": "only admin can delete all the Adds" });
+        } else {
+            let add = adds.filter((add) => {
+                return add.getField("id") === parseInt(req.params.addId);
+            })[0];
+            console.log(add);
+            if (add.getField("author") === user) {
+                next();
+            } else {
+                res.status(401).json({ "msg": "you can only remove/modify your own Adds" });
+            }
+        }
+    }
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -186,7 +218,7 @@ router.get("/", (req, res) => {
     })
 });
 
-router.delete("/", authorisationMiddleware, (req, res) => {
+router.delete("/", verifyPasswordMiddleware, verifyUserMiddleware, (req, res) => {
     adds = [];
     saveAdds(dbPath, adds);
     res
@@ -208,9 +240,9 @@ router.get("/:addId", (req, res) => {
     })
 });
 
-router.delete("/:addId", authorisationMiddleware, (req, res) => {
-    getAdds(dbPath).then((theAdds) => {
-        let availableIds = getFieldsValues(theAdds, "id");
+router.delete("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
+    async (req, res) => {
+        let availableIds = getFieldsValues(adds, "id");
         if (availableIds.includes(parseInt(req.params.addId))) {
             adds = removeAddFromAdds(req.params.addId, adds);
             saveAdds(dbPath, adds);
@@ -222,25 +254,21 @@ router.delete("/:addId", authorisationMiddleware, (req, res) => {
                 .status(400)
                 .json({ "msg": `Add of id: ${req.params.addId} not found` });
         }
-    })
-});
+    });
 
-router.patch("/:addId", authorisationMiddleware, (req, res) => {
-    getAdds(dbPath).then((theAdds) => {
-        let availableIds = getFieldsValues(theAdds, "id");
-        if (availableIds.includes(parseInt(req.params.addId))) {
-            adds = theAdds;
-            adds = modifyAddFields(req.params.addId, req.body, adds);
-            saveAdds(dbPath, adds);
-            res
-                .status(200)
-                .json({ "msg": `Add ${req.params.addId} was modified` });
-        } else {
-            res
-                .status(400)
-                .json({ "msg": `Add of id: ${req.params.addId} not found` });
-        }
-    })
+router.patch("/:addId", verifyPasswordMiddleware, verifyUserMiddleware, (req, res) => {
+    let availableIds = getFieldsValues(adds, "id");
+    if (availableIds.includes(parseInt(req.params.addId))) {
+        adds = modifyAddFields(req.params.addId, req.body, adds);
+        saveAdds(dbPath, adds);
+        res
+            .status(200)
+            .json({ "msg": `Add ${req.params.addId} was modified` });
+    } else {
+        res
+            .status(400)
+            .json({ "msg": `Add of id: ${req.params.addId} not found` });
+    }
 });
 
 router.post("/addNew", (req, res) => {
