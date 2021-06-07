@@ -46,9 +46,9 @@ Lista funkcji:
 1. [1 punkt] Port z którego korzysta aplikacja powinien być ustawiany za pomocą zmiennych środowiskowych
 
 ```bash
-npm run dev # default port (read from sample.env file)
+npm run start # default port (read from sample.env file)
 # or
-PORT=9999 npm run dev # port from env variable
+PORT=9999 npm run start # port from env variable
 ```
 
 2. [1 punkt] Aplikacja na żądania wysłane pod adres `/heartbeat` odpowiada zwracając aktualną datę i godzinę
@@ -168,7 +168,37 @@ echo `curl --location --request PATCH 'http://localhost:4700/api/adds/2' \
 
 10. [4 punkty] Aplikacja ma 3 zdefiniowanych na stałe użytkowników, każdy z nich może usuwać i modyfikować tylko te ogłoszenia które sam dodał, przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
 
+```bash
+# correct deletion
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds' \
+--header 'Password: 1234' \
+--header 'User: admin'`
+
+# incorrect deletion (only admin can delte all adds)
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds' \
+--header 'Password: 1234'
+--header 'User: ala'`
+
+# correct deletion
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3' \
+--header 'Password: 1234' \
+--header 'User: ala`
+
+# correct modification
+echo `curl --location --request PATCH 'http://localhost:4700/api/adds/4' \
+--header 'Password: 1234' \
+--header 'User: ala' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "description": "modified add"
+}'`
+```
+
 11. [3 punkty] Aplikacja po uruchomieniu z parametrem (np `debug`) zapisuje w pliku czas odebrania żądania, metodę HTTP oraz adres na który przyszło żądanie
+
+```bash
+npm run start debug
+```
 
 12. [2 punkty] Aplikacja po odebraniu żądania do adresu który nie istnieje powinna zwracać statyczny obrazek zamiast domyślnej strony błędu 404
 

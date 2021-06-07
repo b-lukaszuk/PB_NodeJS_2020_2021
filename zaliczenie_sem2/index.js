@@ -5,6 +5,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const fs = require("fs");
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -15,15 +16,58 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const PORT = process.env.PORT || 4701;
 
+const debugMode = process.argv[2] === "debug";
+
+let getLogsPath = () => {
+    return path.join(__dirname, "logs/", "logs_" + todayDate() + ".txt");
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 functions                                 //
 ///////////////////////////////////////////////////////////////////////////////
+function addToLogs(message, logsPath) {
+    fs.appendFile(logsPath, message, "utf8", (err) => {
+        if (err) {
+            throw err;
+        } else {
+            console.log("log saved");
+        }
+    });
+}
+
+/**
+ * returns string, appropriate todays date format for logsPath
+ * my locale is english-US, may not work with other locales
+ * @returns {string} string in format "day_month_year"
+ */
+function todayDate() {
+    // returns, e.g. 24-04-2021
+    // since I've got an operating system with english locale
+    let today = new Date().toLocaleDateString();
+    let [month, day, year, garbage] = today.split("/");
+    let result = `${day}_${month}_${year}`;
+    return result;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//                                 middleware                                //
+///////////////////////////////////////////////////////////////////////////////
+function loggerMiddleware(req, res, next) {
+    if (debugMode) {
+        let reqReceivedTime = new Date().toUTCString();
+        let logMsg = `${reqReceivedTime}, http method: ${req.method}, address: ${req.originalUrl}\n`;
+        addToLogs(logMsg, getLogsPath());
+    }
+    next();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                             program execution                             //
 ///////////////////////////////////////////////////////////////////////////////
+app.use(loggerMiddleware);
+
 // set static folder
 app.use(express.static(path.join(__dirname, "public")));
 

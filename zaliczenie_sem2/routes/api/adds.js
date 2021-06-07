@@ -167,21 +167,24 @@ function verifyPasswordMiddleware(req, res, next) {
 }
 
 async function verifyUserMiddleware(req, res, next) {
+    console.log(req.originalUrl);
     let user = req.headers.user;
     if (!users.includes(user)) {
         res.status(401).json({ "msg": "unknown user" });
     } else {
         adds = await getAdds(dbPath);
         if (user === "admin") {
-            next();
+            next(); // admin can remove all the posts
         } else if (req.params.addId === undefined) {
             res.status(401).json({ "msg": "only admin can delete all the Adds" });
         } else {
             let add = adds.filter((add) => {
                 return add.getField("id") === parseInt(req.params.addId);
             })[0];
-            console.log(add);
-            if (add.getField("author") === user) {
+            if (add === undefined) {
+                res.status(400)
+                    .json({ "msg": `Add of id: ${req.params.addId} not found` });
+            } else if (add.getField("author") === user) {
                 next();
             } else {
                 res.status(401).json({ "msg": "you can only remove/modify your own Adds" });
@@ -191,9 +194,8 @@ async function verifyUserMiddleware(req, res, next) {
 }
 
 
-
 ///////////////////////////////////////////////////////////////////////////////
-//                             adds api/routes                            //
+//                             adds api/routes                               //
 ///////////////////////////////////////////////////////////////////////////////
 // get all adds
 // here / stands for
