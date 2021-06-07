@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "ff77557d-209c-4aa1-8cf1-0d2f28de562b",
+		"name": "zalSem2NodeJS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "displayAllAdds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}",
+					"host": [
+						"{{adds}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "displaySingleAdd",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}/33",
+					"host": [
+						"{{adds}}"
+					],
+					"path": [
+						"33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addSingleAdd",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"category\": \"zabawka\",\n        \"description\": \"test test\",\n        \"author\": \"test test\",\n        \"tags\": [\"test\"],\n        \"price\": 333,\n        \"title\": \"zabawka\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{addNewAdd}}",
+					"host": [
+						"{{addNewAdd}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifySingleAdd",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"author\": \"madka polka\",\n        \"price\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{adds}}/5",
+					"host": [
+						"{{adds}}"
+					],
+					"path": [
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteSingleAdd",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}/4",
+					"host": [
+						"{{adds}}"
+					],
+					"path": [
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "heartbeat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serwer}}/heartbeat",
+					"host": [
+						"{{serwer}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mainPage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serwer}}",
+					"host": [
+						"{{serwer}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filterById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}?id=2",
+					"host": [
+						"{{adds}}"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filterByTitle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}?title=sprzedam",
+					"host": [
+						"{{adds}}"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "sprzedam"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filterByDescription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}?description=test",
+					"host": [
+						"{{adds}}"
+					],
+					"query": [
+						{
+							"key": "description",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filterByCategory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}?category=dzieciecy",
+					"host": [
+						"{{adds}}"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "dzieciecy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAllAdds",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}",
+					"host": [
+						"{{adds}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filterByTags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}?tags=igla",
+					"host": [
+						"{{adds}}"
+					],
+					"query": [
+						{
+							"key": "tags",
+							"value": "igla"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filterByPrice",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{adds}}?price=300&price=900",
+					"host": [
+						"{{adds}}"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "300"
+						},
+						{
+							"key": "price",
+							"value": "900"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

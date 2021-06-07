@@ -136,3 +136,10 @@ cat addsDb/adds.json
 13. [2 punkty] W przypadku wystąpienia błędów aplikacji, szczegóły błędu zapisywane są w console.log a użytkownik dostaje stosowny komunikat i kod odpowiedzi HTTP
 
 14. [+15% do już uzyskanych punktów] Aplikacja jest udokumentowana za pomocą Postmana - kolekcja zawierająca przykłady żądań do wszystkich przygotowanych funkcji
+
+```bash
+# srodowisko wyeksportowane z Postmana
+cat nodeJSzalSem2.postman_environment.json
+# przyklady zadan wyeksportowane z Postmana
+cat zalSem2NodeJS.postman_collection.json
+```
