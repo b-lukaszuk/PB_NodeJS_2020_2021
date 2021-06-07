@@ -150,12 +150,12 @@ function getAddsWithPriceBetween(minIncl, maxIncl, adds) {
 }
 
 function authorisationMiddleware(req, res, next) {
-    if (req.headers.password === "1234") {
-        console.log("password is ok");
+    if (req.headers.password === undefined) {
+        res.status(401).json({ "msg": "authorization by password required" });
+    } else if (req.headers.password === "1234") {
         next();
     } else {
-        console.log("password is wrong");
-        res.status(401).json({ "msg": "authorization by password required" });
+        res.status(401).json({ "msg": "incorrect password, try again" });
     }
 }
 
