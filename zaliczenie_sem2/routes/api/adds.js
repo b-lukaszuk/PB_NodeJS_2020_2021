@@ -8,7 +8,7 @@ const router = express.Router();
 // add class
 const Add = require("../../customClasses/add.js").Add;
 // read adds
-const getAdds = require("../../readWriteAdds/readAdds.js").getAdds;
+const readAdds = require("../../readWriteAdds/readAdds.js").getAdds;
 // write adds
 const saveAdds = require("../../readWriteAdds/writeAdds.js").saveAdds;
 
@@ -172,7 +172,7 @@ async function verifyUserMiddleware(req, res, next) {
     if (!users.includes(user)) {
         res.status(401).json({ "msg": "unknown user" });
     } else {
-        adds = await getAdds(dbPath);
+        adds = await readAdds(dbPath);
         if (user === "admin") {
             next(); // admin can remove all the posts
         } else if (req.params.addId === undefined) {
@@ -201,7 +201,7 @@ async function verifyUserMiddleware(req, res, next) {
 // here / stands for
 // http://localhost:4700/api/adds (see index.js where we use routes)
 router.get("/", (req, res) => {
-    getAdds(dbPath).then((theAdds) => {
+    readAdds(dbPath).then((theAdds) => {
         adds = theAdds;
         if (!isEmpty(req.query)) {
             let queryField = Object.keys(req.query)[0];
@@ -229,7 +229,7 @@ router.delete("/", verifyPasswordMiddleware, verifyUserMiddleware, (req, res) =>
 });
 
 router.get("/:addId", (req, res) => {
-    getAdds(dbPath).then((theAdds) => {
+    readAdds(dbPath).then((theAdds) => {
         adds = theAdds;
         adds = getAddsWhereFieldContains("id", req.params.addId, adds)
         if (adds.length !== 0) {
@@ -274,7 +274,7 @@ router.patch("/:addId", verifyPasswordMiddleware, verifyUserMiddleware, (req, re
 });
 
 router.post("/addNew", (req, res) => {
-    getAdds(dbPath).then((theAdds) => {
+    readAdds(dbPath).then((theAdds) => {
         adds = theAdds;
         let missingFields = missingFieldsToBeAdd(req.body);
         if (missingFields.length === 0) {
