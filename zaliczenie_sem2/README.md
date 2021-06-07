@@ -127,6 +127,45 @@ cat addsDb/adds.json
 
 9. [2 punkty] Usuwanie i modyfikowanie ogłoszeń jest zabezpieczone hasłem (np. middleware weryfikujące hasło), przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
 
+```bash
+# correct deletion
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3' \
+--header 'Password: 1234'`
+
+# incorrect deletion1
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3' \
+--header 'Password: 123456'`
+
+# incorrect deletion2
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3'`
+
+# correct modification
+echo `curl --location --request PATCH 'http://localhost:4700/api/adds/2' \
+--header 'Password: 1234' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "author": "madka polka",
+        "price": 3
+}'`
+
+# incorrect modification1
+echo `curl --location --request PATCH 'http://localhost:4700/api/adds/2' \
+--header 'Password: 123456' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "author": "madka polka",
+        "price": 3
+}'`
+
+# incorrect modification2
+echo `curl --location --request PATCH 'http://localhost:4700/api/adds/2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "author": "madka polka",
+        "price": 3
+}'`
+```
+
 10. [4 punkty] Aplikacja ma 3 zdefiniowanych na stałe użytkowników, każdy z nich może usuwać i modyfikować tylko te ogłoszenia które sam dodał, przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
 
 11. [3 punkty] Aplikacja po uruchomieniu z parametrem (np `debug`) zapisuje w pliku czas odebrania żądania, metodę HTTP oraz adres na który przyszło żądanie

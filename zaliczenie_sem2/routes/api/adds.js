@@ -149,6 +149,15 @@ function getAddsWithPriceBetween(minIncl, maxIncl, adds) {
         (add) => { return isBetween(add.price, minIncl, maxIncl) });
 }
 
+function authorisationMiddleware(req, res, next) {
+    if (req.headers.password === "1234") {
+        console.log("password is ok");
+        next();
+    } else {
+        console.log("password is wrong");
+        res.status(401).json({ "msg": "authorization by password required" });
+    }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -177,7 +186,7 @@ router.get("/", (req, res) => {
     })
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", authorisationMiddleware, (req, res) => {
     adds = [];
     saveAdds(dbPath, adds);
     res
@@ -199,7 +208,7 @@ router.get("/:addId", (req, res) => {
     })
 });
 
-router.delete("/:addId", (req, res) => {
+router.delete("/:addId", authorisationMiddleware, (req, res) => {
     getAdds(dbPath).then((theAdds) => {
         let availableIds = getFieldsValues(theAdds, "id");
         if (availableIds.includes(parseInt(req.params.addId))) {
@@ -216,7 +225,7 @@ router.delete("/:addId", (req, res) => {
     })
 });
 
-router.patch("/:addId", (req, res) => {
+router.patch("/:addId", authorisationMiddleware, (req, res) => {
     getAdds(dbPath).then((theAdds) => {
         let availableIds = getFieldsValues(theAdds, "id");
         if (availableIds.includes(parseInt(req.params.addId))) {
