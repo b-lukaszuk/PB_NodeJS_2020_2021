@@ -1,3 +1,5 @@
+"use strict";
+
 const fs = require("fs");
 
 // import add definition
