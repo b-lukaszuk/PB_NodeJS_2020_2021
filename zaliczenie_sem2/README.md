@@ -197,7 +197,7 @@ echo `curl --location --request PATCH 'http://localhost:4700/api/adds/4' \
 11. [3 punkty] Aplikacja po uruchomieniu z parametrem (np `debug`) zapisuje w pliku czas odebrania żądania, metodę HTTP oraz adres na który przyszło żądanie
 
 ```bash
-npm run start debug
+npm run start debug # i teraz nalezy uzywac normalnie
 ```
 
 12. [2 punkty] Aplikacja po odebraniu żądania do adresu który nie istnieje powinna zwracać statyczny obrazek zamiast domyślnej strony błędu 404

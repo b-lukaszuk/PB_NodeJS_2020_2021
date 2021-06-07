@@ -62,6 +62,12 @@ function loggerMiddleware(req, res, next) {
     next();
 }
 
+function pageNotFoundMiddleware(req, res, next) {
+    res.status(404);
+    next();
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                             program execution                             //
@@ -78,6 +84,9 @@ app.use(express.json({ extended: true }));
 app.use("/api/adds", require("./routes/api/adds.js"));
 
 app.use("/heartbeat", require("./routes/heartbeat.js"));
+
+app.use("*", pageNotFoundMiddleware,
+    express.static(path.join(__dirname, "public/pageNotFound.html")));
 
 app.listen(PORT, () => {
     console.log(`Server started on port localhost://${PORT}`);
