@@ -13,7 +13,7 @@ const { getAdds } = require("./readWriteAdds/readAdds.js");
 //                         global constants/variables                        //
 ///////////////////////////////////////////////////////////////////////////////
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config({ path: "./sample.env" });
+    require('dotenv').config({ path: "./environmentalVariables/sample.env" });
 }
 const PORT = process.env.PORT || 4701;
 
@@ -38,7 +38,7 @@ function addToLogs(message, logsPath) {
 }
 
 /**
- * returns string, appropriate todays date format for logsPath
+ * returns a string, appropriate today date format for logsPath
  * my locale is english-US, may not work with other locales
  * @returns {string} string in format "day_month_year"
  */
@@ -57,7 +57,8 @@ function todayDate() {
 function loggerMiddleware(req, res, next) {
     if (debugMode) {
         let reqReceivedTime = new Date().toUTCString();
-        let logMsg = `${reqReceivedTime}, http method: ${req.method}, address: ${req.originalUrl}\n`;
+        let logMsg = `${reqReceivedTime}, http method: ` +
+            `${req.method}, address: ${req.originalUrl}\n`;
         addToLogs(logMsg, getLogsPath());
     }
     next();
@@ -69,11 +70,10 @@ function pageNotFoundMiddleware(req, res, next) {
 }
 
 function errorHandlingMiddleware(error, req, res, next) {
-    console.log(error.message); // wymagane, moze chodzilo o log.txt?
+    console.log(error.message); // wymagane, moze chodzilo o zapis do log.txt?
     res.status(500);
     res.json({ error: { message: error.message } });
 }
-
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,6 @@ app.use("/api/adds", require("./routes/api/adds.js"));
 app.use("/heartbeat", require("./routes/heartbeat.js"));
 
 app.get("/error", (req, res) => {
-    // getAdds("tomek");
     throw new Error("serwer error (generated for test purposes)");
 });
 
