@@ -47,27 +47,30 @@ function verifyPasswordMiddleware(req, res, next) {
 }
 
 async function verifyUserMiddleware(req, res, next) {
-    console.log(req.originalUrl);
     let user = req.headers.user;
+    let addId = req.params.addId;
     if (!users.includes(user)) {
         res.status(401).json({ "msg": "unknown user" });
-    } else {
+    } else { // for known users
         adds = await readAdds(pathToAddsDb);
+        // admin can remove Adds (all at once | one by one) no matter the author
         if (user === "admin") {
-            next(); // admin can remove all the posts
-        } else if (req.params.addId === undefined) {
-            res.status(401).json({ "msg": "only admin can delete all the Adds" });
+            next();
+        } else if (addId === undefined) { // remove all Adds at once
+            res.status(401)
+                .json({ "msg": "only admin can delete all the Adds" });
         } else {
             let add = adds.filter((add) => {
-                return add.getField("id") === parseInt(req.params.addId);
-            })[0];
+                return add.getField("id") === parseInt(addId);
+            })[0]; // Add to remove or undefined
             if (add === undefined) {
                 res.status(400)
-                    .json({ "msg": `Add of id: ${req.params.addId} not found` });
+                    .json({ "msg": `Add of id: ${addId} not found` });
             } else if (add.getField("author") === user) {
-                next();
+                next(); // user removes their own add
             } else {
-                res.status(401).json({ "msg": "you can only remove/modify your own Adds" });
+                res.status(401)
+                    .json({ "msg": "you can only remove/modify own Adds" });
             }
         }
     }
@@ -83,13 +86,14 @@ async function verifyUserMiddleware(req, res, next) {
 router.get("/", (req, res) => {
     readAdds(pathToAddsDb).then((theAdds) => {
         adds = theAdds;
-        if (!isEmpty(req.query)) {
+        if (!isEmpty(req.query)) { // handle query
             let queryField = Object.keys(req.query)[0];
             let queryValue = req.query[queryField];
             if (queryField === "price") {
                 adds = getAddsWithPriceBetween(...queryValue, adds);
             } else {
-                adds = getAddsWhereFieldContainsValue(queryField, queryValue, adds);
+                adds = getAddsWhereFieldContainsValue(queryField,
+                    queryValue, adds);
             }
         }
         if (adds.length !== 0) {
@@ -100,14 +104,7 @@ router.get("/", (req, res) => {
     })
 });
 
-router.delete("/", verifyPasswordMiddleware, verifyUserMiddleware, (req, res) => {
-    adds = [];
-    saveAdds(pathToAddsDb, adds);
-    res
-        .status(200)
-        .json({ "msg": `All adds have been deleted` });
-});
-
+// get add of specific ID
 router.get("/:addId", (req, res) => {
     readAdds(pathToAddsDb).then((theAdds) => {
         adds = theAdds;
@@ -122,6 +119,20 @@ router.get("/:addId", (req, res) => {
     })
 });
 
+// delete all adds - only admin can do that (see middleware)
+// requires password="1234"
+router.delete("/", verifyPasswordMiddleware,
+    verifyUserMiddleware, (req, res) => {
+        adds = [];
+        saveAdds(pathToAddsDb, adds);
+        res
+            .status(200)
+            .json({ "msg": `All adds have been deleted` });
+    });
+
+// delete single add, only if user === Add.author, unless the user is admin
+// (see middleware)
+// requires password="1234"
 router.delete("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
     async (req, res) => {
         let availableIds = getArrOfValues(adds, "id");
@@ -138,21 +149,26 @@ router.delete("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
         }
     });
 
-router.patch("/:addId", verifyPasswordMiddleware, verifyUserMiddleware, (req, res) => {
-    let availableIds = getArrOfValues(adds, "id");
-    if (availableIds.includes(parseInt(req.params.addId))) {
-        adds = modifyAddFields(req.params.addId, req.body, adds);
-        saveAdds(pathToAddsDb, adds);
-        res
-            .status(200)
-            .json({ "msg": `Add ${req.params.addId} was modified` });
-    } else {
-        res
-            .status(400)
-            .json({ "msg": `Add of id: ${req.params.addId} not found` });
-    }
-});
+// modify single add, only if user === Add.author, unless the user is admin
+// (see middleware)
+// requires password="1234"
+router.patch("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
+    (req, res) => {
+        let availableIds = getArrOfValues(adds, "id");
+        if (availableIds.includes(parseInt(req.params.addId))) {
+            adds = modifyAddFields(req.params.addId, req.body, adds);
+            saveAdds(pathToAddsDb, adds);
+            res
+                .status(200)
+                .json({ "msg": `Add ${req.params.addId} was modified` });
+        } else {
+            res
+                .status(400)
+                .json({ "msg": `Add of id: ${req.params.addId} not found` });
+        }
+    });
 
+// add new Add
 router.post("/addNew", (req, res) => {
     readAdds(pathToAddsDb).then((theAdds) => {
         adds = theAdds;
