@@ -6,270 +6,522 @@
 	},
 	"item": [
 		{
-			"name": "displayAllAdds",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}",
-					"host": [
-						"{{adds}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "displaySingleAdd",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}/33",
-					"host": [
-						"{{adds}}"
-					],
-					"path": [
-						"33"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "addSingleAdd",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n        \"category\": \"zabawka\",\n        \"description\": \"test test\",\n        \"author\": \"test test\",\n        \"tags\": [\"test\"],\n        \"price\": 333,\n        \"title\": \"zabawka\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "delete",
+			"item": [
+				{
+					"name": "deleteSingleAdd",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Password",
+								"value": "1234",
+								"type": "text"
+							},
+							{
+								"key": "User",
+								"value": "ala",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{adds}}/2",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"2"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{addNewAdd}}",
-					"host": [
-						"{{addNewAdd}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modifySingleAdd",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n        \"author\": \"madka polka\",\n        \"price\": 3\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "deleteAllAdds",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Password",
+								"value": "1234",
+								"type": "text"
+							},
+							{
+								"key": "User",
+								"value": "ala",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{adds}}",
+							"host": [
+								"{{adds}}"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{adds}}/5",
-					"host": [
-						"{{adds}}"
-					],
-					"path": [
-						"5"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "deleteSingleAdd",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}/4",
-					"host": [
-						"{{adds}}"
-					],
-					"path": [
-						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "heartbeat",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{serwer}}/heartbeat",
-					"host": [
-						"{{serwer}}"
-					],
-					"path": [
-						"heartbeat"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "mainPage",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{serwer}}",
-					"host": [
-						"{{serwer}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "filterById",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}?id=2",
-					"host": [
-						"{{adds}}"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "2"
+				{
+					"name": "deleteSingleAdd2",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{adds}}/3",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"3"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "filterByTitle",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}?title=sprzedam",
-					"host": [
-						"{{adds}}"
-					],
-					"query": [
-						{
-							"key": "title",
-							"value": "sprzedam"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSingleAdd3",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Password",
+								"value": "12345",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{adds}}/3",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"3"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "filterByDescription",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}?description=test",
-					"host": [
-						"{{adds}}"
-					],
-					"query": [
-						{
-							"key": "description",
-							"value": "test"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllAdds2",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Password",
+								"value": "1234",
+								"type": "text"
+							},
+							{
+								"key": "User",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{adds}}",
+							"host": [
+								"{{adds}}"
+							]
 						}
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "filterByCategory",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}?category=dzieciecy",
-					"host": [
-						"{{adds}}"
-					],
-					"query": [
-						{
-							"key": "category",
-							"value": "dzieciecy"
+			"name": "filter",
+			"item": [
+				{
+					"name": "filterById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}?id=0",
+							"host": [
+								"{{adds}}"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "deleteAllAdds",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}",
-					"host": [
-						"{{adds}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "filterByTags",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}?tags=igla",
-					"host": [
-						"{{adds}}"
-					],
-					"query": [
-						{
-							"key": "tags",
-							"value": "igla"
+					},
+					"response": []
+				},
+				{
+					"name": "filterByTitle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}?title=wozek",
+							"host": [
+								"{{adds}}"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "wozek"
+								}
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "filterByDescription",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}?description=test",
+							"host": [
+								"{{adds}}"
+							],
+							"query": [
+								{
+									"key": "description",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterByCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}?category=test",
+							"host": [
+								"{{adds}}"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterByPrice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}?price=300&price=900",
+							"host": [
+								"{{adds}}"
+							],
+							"query": [
+								{
+									"key": "price",
+									"value": "300"
+								},
+								{
+									"key": "price",
+									"value": "900"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterByTags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}?tags=igla",
+							"host": [
+								"{{adds}}"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "igla"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "filterByPrice",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{adds}}?price=300&price=900",
-					"host": [
-						"{{adds}}"
-					],
-					"query": [
-						{
-							"key": "price",
-							"value": "300"
+			"name": "display",
+			"item": [
+				{
+					"name": "displaySingleAdd",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}/1",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mainPage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serwer}}",
+							"host": [
+								"{{serwer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "heartbeat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serwer}}/heartbeat",
+							"host": [
+								"{{serwer}}"
+							],
+							"path": [
+								"heartbeat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "displayAllAdds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}",
+							"host": [
+								"{{adds}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "displaySingleAdd2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{adds}}/999",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "modify",
+			"item": [
+				{
+					"name": "modifySingleAdd2",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Password",
+								"value": "1234",
+								"type": "text"
+							},
+							{
+								"key": "User",
+								"value": "adam",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"description\": \"double modified add\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "price",
-							"value": "900"
+						"url": {
+							"raw": "{{adds}}/1",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"1"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "modifySingleAdd",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Password",
+								"value": "1234",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"author\": \"madka polka\",\n        \"price\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{adds}}/2",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifySingleAdd3",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Password",
+								"value": "1234",
+								"type": "text"
+							},
+							{
+								"key": "User",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"description\": \"double modified add\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{adds}}/1",
+							"host": [
+								"{{adds}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "addNew",
+			"item": [
+				{
+					"name": "addSingleAdd",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"category\": \"zabawka\",\n        \"description\": \"test test\",\n        \"author\": \"ala\",\n        \"tags\": [\"test\"],\n        \"price\": 333,\n        \"title\": \"zabawka\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{addNewAdd}}",
+							"host": [
+								"{{addNewAdd}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "error",
+			"item": [
+				{
+					"name": "error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serwer}}/error",
+							"host": [
+								"{{serwer}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pageNotFound",
+			"item": [
+				{
+					"name": "pageNotFound",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

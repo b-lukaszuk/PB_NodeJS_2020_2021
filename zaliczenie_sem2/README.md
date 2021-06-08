@@ -46,7 +46,7 @@ Lista funkcji:
 1. [1 punkt] Port z którego korzysta aplikacja powinien być ustawiany za pomocą zmiennych środowiskowych
 
 ```bash
-npm run start # default port (read from sample.env file)
+npm run start # default port (read from ./environmentalVariables/sample.env file)
 # or
 PORT=9999 npm run start # port from env variable
 ```
@@ -65,7 +65,7 @@ echo `curl --location --request POST 'http://localhost:4700/api/adds/addNew' \
 --data-raw '{
         "category": "zabawka",
         "description": "test test",
-        "author": "test test",
+        "author": "ala",
         "tags": ["test"],
         "price": 333,
         "title": "zabawka"
@@ -75,43 +75,60 @@ echo `curl --location --request POST 'http://localhost:4700/api/adds/addNew' \
 4. [2 punkty] Aplikacja umożliwia zwracanie wszystkich ogłoszeń oraz pojedynczego ogłoszenia
 
 ```bash
-echo `curl --location --request GET 'http://localhost:4700/api/adds'` # displays all adds
+echo `curl --location --request GET 'http://localhost:4700/api/adds'`
 # or
-echo `curl --location --request GET 'http://localhost:4700/api/adds/0'` # displays choosen add
+echo `curl --location --request GET 'http://localhost:4700/api/adds/1'`
 # or
-echo `curl --location --request GET 'http://localhost:4700/api/adds?id=0'` # displays choosen add
+echo `curl --location --request GET 'http://localhost:4700/api/adds/999'`
 ```
 
 5. [1 punkt] Aplikacja umożliwia usuwanie wybranego ogłoszenia
 
 ```bash
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds'` # deletes all adds
-# or
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds/2'` # deltes choosen add
+# single add (if user is the author)
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds/2' \
+--header 'Password: 1234' \
+--header 'User: ala'`
+
+# all adds (only admin)
+echo `curl --location --request DELETE 'http://localhost:4700/api/adds' \
+--header 'Password: 1234' \
+--header 'User: admin'`
 ```
 
 6. [1 punkt] Aplikacja umożliwia modyfikowanie wybranego ogłoszenia
 
 ```bash
+# if user is the author
 echo `curl --location --request PATCH 'http://localhost:4700/api/adds/1' \
+--header 'Password: 1234' \
+--header 'User: adam' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-        "author": "madka polka",
-        "price": 3
+        "description": "double modified add"
+}'`
+
+# admin can do it at will
+echo `curl --location --request PATCH 'http://localhost:4700/api/adds/1' \
+--header 'Password: 1234' \
+--header 'User: admin' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "description": "double modified add"
 }'`
 ```
 
 7. [1 punkt za każde kryterium wyszukiwania] Aplikacja pozwala na wyszukiwanie ogłoszeń według różnych kryteriów (tytuł, opis, zakres data, zakres ceny itp).
 
 ```bash
-# simple (single) querries like:
+# simple querries like:
 echo `curl --location --request GET 'http://localhost:4700/api/adds?id=0'`
 # or
-echo `curl --location --request GET 'http://localhost:4700/api/adds?title=sprzedam'`
+echo `curl --location --request GET 'http://localhost:4700/api/adds?title=wozek'`
 # or
-echo `curl --location --request GET 'http://localhost:4700/api/adds?description=tanio'`
+echo `curl --location --request GET 'http://localhost:4700/api/adds?description=test'`
 # or
-echo `curl --location --request GET 'http://localhost:4700/api/adds?category=dzieciecy'`
+echo `curl --location --request GET 'http://localhost:4700/api/adds?category=test'`
 # or
 echo `curl --location --request GET 'http://localhost:4700/api/adds?tags=igla'`
 # or
@@ -128,76 +145,24 @@ cat addsDb/adds.json
 9. [2 punkty] Usuwanie i modyfikowanie ogłoszeń jest zabezpieczone hasłem (np. middleware weryfikujące hasło), przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
 
 ```bash
-# correct deletion
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3' \
---header 'Password: 1234'`
-
-# incorrect deletion1
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3' \
---header 'Password: 123456'`
-
-# incorrect deletion2
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3'`
-
-# correct modification
-echo `curl --location --request PATCH 'http://localhost:4700/api/adds/2' \
---header 'Password: 1234' \
---header 'Content-Type: application/json' \
---data-raw '{
-        "author": "madka polka",
-        "price": 3
-}'`
-
-# incorrect modification1
-echo `curl --location --request PATCH 'http://localhost:4700/api/adds/2' \
---header 'Password: 123456' \
---header 'Content-Type: application/json' \
---data-raw '{
-        "author": "madka polka",
-        "price": 3
-}'`
-
-# incorrect modification2
-echo `curl --location --request PATCH 'http://localhost:4700/api/adds/2' \
---header 'Content-Type: application/json' \
---data-raw '{
-        "author": "madka polka",
-        "price": 3
-}'`
+# see point 5 and 6 above
+# see middleware in ./routes/api/adds.js
 ```
 
 10. [4 punkty] Aplikacja ma 3 zdefiniowanych na stałe użytkowników, każdy z nich może usuwać i modyfikować tylko te ogłoszenia które sam dodał, przy braku dostępu zwracany jest stosowny komunikat i kod odpowiedzi HTTP
 
 ```bash
-# correct deletion
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds' \
---header 'Password: 1234' \
---header 'User: admin'`
-
-# incorrect deletion (only admin can delte all adds)
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds' \
---header 'Password: 1234'
---header 'User: ala'`
-
-# correct deletion
-echo `curl --location --request DELETE 'http://localhost:4700/api/adds/3' \
---header 'Password: 1234' \
---header 'User: ala`
-
-# correct modification
-echo `curl --location --request PATCH 'http://localhost:4700/api/adds/4' \
---header 'Password: 1234' \
---header 'User: ala' \
---header 'Content-Type: application/json' \
---data-raw '{
-        "description": "modified add"
-}'`
+# see point 5 and 6 above
+# see users in ./routes/api/adds.js
 ```
 
 11. [3 punkty] Aplikacja po uruchomieniu z parametrem (np `debug`) zapisuje w pliku czas odebrania żądania, metodę HTTP oraz adres na który przyszło żądanie
 
 ```bash
 npm run start debug # i teraz nalezy uzywac normalnie
+# or
+npm run dev debug # i teraz nalezy uzywac normalnie
+# see ./logs/
 ```
 
 12. [2 punkty] Aplikacja po odebraniu żądania do adresu który nie istnieje powinna zwracać statyczny obrazek zamiast domyślnej strony błędu 404

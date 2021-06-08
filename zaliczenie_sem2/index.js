@@ -56,7 +56,7 @@ function todayDate() {
 ///////////////////////////////////////////////////////////////////////////////
 function loggerMiddleware(req, res, next) {
     if (debugMode) {
-        let reqReceivedTime = new Date().toUTCString();
+        let reqReceivedTime = new Date().toLocaleString();
         let logMsg = `${reqReceivedTime}, http method: ` +
             `${req.method}, address: ${req.originalUrl}\n`;
         addToLogs(logMsg, getLogsPath());
