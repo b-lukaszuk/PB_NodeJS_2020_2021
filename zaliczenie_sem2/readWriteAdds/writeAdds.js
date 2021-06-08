@@ -2,17 +2,15 @@
 
 const fs = require("fs");
 
-// import add definition
-const nt = require("../customClasses/add.js");
-// class Add itself
-const Add = nt.Add;
+// class Add
+const Add = require("../customClasses/add.js").Add;
 
 /**
- * writes down array of Add objects to a file with the content like:
+ * writes down an array of Add objects to a file with the content like:
  * [ { "id": 0, title: "xxx1", author: "yyy1", etc. },
  * {"id": 1, title: "xxx1", author: "yyy2", etc. } ]
  * @param {string} path - where to write the dictionary
- * @param {Add[]}  tabAdds - array of Add
+ * @param {Add[]}  tabAdds - array of Adds
  */
 function saveAdds(path, tabAdds) {
     let adds = JSON.stringify(tabAdds);

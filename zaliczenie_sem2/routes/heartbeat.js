@@ -26,7 +26,7 @@ function nowDateTime() {
 //                                 api/routes                                //
 ///////////////////////////////////////////////////////////////////////////////
 // here / stands for
-// http://localhost:4700/heartbeat (see index.js where we use routes)
+// http://localhost:4700/heartbeat (see index.js where we use this route)
 router.get("/", (req, res) => {
     res.send(nowDateTime());
 });

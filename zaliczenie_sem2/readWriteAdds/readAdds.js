@@ -1,36 +1,34 @@
 "use strict";
 const fs = require("fs");
 
-// Add class definition
-const nt = require("../customClasses/add.js");
-// the Add class itself
-const Add = nt.Add;
+// the Add class
+const Add = require("../customClasses/add.js").Add;
 
 /**
  * changes inline object, like {title: "xxx", author: "yyy", etc.}
  * to object of class add
- * @param {number} id - id of a add
- * @param {Object} obj inline postaci {title: "xxx", author: "yyy", etc.}
- * @return {Object<Add>} object of class add
+ * @param {number} id - unique id of a add (assigned in adds.js)
+ * @param {Object} obj inline object, like {title: "xxx", author: "yyy", etc.}
+ * @return {Object<Add>} object of class Add
  */
 function objToAdd(id, obj) {
     return new Add(parseInt(id), obj.title, obj.description, obj.author,
-        obj.category, obj.tags, parseFloat(obj.price));
+        obj.category, obj.tags, parseInt(obj.price));
 }
 
 /**
  * returns an array of Add objects
- * @param {Object[]} dbAdds database in the form of:
+ * @param {Object[]} dbAdds database of inline objects, like:
  * [
- * { title: "xxx1", author: "yyy1", etc. },
- * { title: "xxx1", author: "yyy2", etc. } 
+ * { id: 1, title: "xxx1", author: "yyy1", etc. },
+ * { id: 2, title: "xxx1", author: "yyy2", etc. } 
  * ] 
-* @return {Add[]} array of adds [add1, add2, add3]
+ * @return {Add[]} array of Adds [add1, add2, add3]
  */
 function tabObjsToTabAdds(tabObjs) {
     let tabAdds = [];
     for (let obj of tabObjs) {
-        tabAdds.push(objToAdd(obj.id, obj))
+        tabAdds.push(objToAdd(obj.id, obj));
     }
     return tabAdds;
 }
@@ -39,8 +37,8 @@ function tabObjsToTabAdds(tabObjs) {
  * returns an array of Add objects
  * @param {string} path - path to adds.json
  * file adds.json: content, e.g.
- * { 0: { title: "xxx1", author: "yyy1", etc. },
- * 1: { title: "xxx1", author: "yyy2", etc. } }
+ * [{ id: 1, title: "xxx1", author: "yyy1", etc. },
+ * { id: 2, title: "xxx1", author: "yyy2", etc. } ]
  * @return {Adds[]} array of objects of class Add
  */
 function getAdds(path) {
