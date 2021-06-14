@@ -6,8 +6,6 @@ const express = require("express");
 const router = express.Router();
 
 const utils = require("./utils/utils.js");
-// Add class
-const Add = require("../../customClasses/add.js").Add;
 
 // functions
 const readAdds = require("../../readWriteAdds/readAdds.js").getAdds;
@@ -46,6 +44,7 @@ function verifyPasswordMiddleware(req, res, next) {
     }
 }
 
+// varifyUserMiddleware reads the adds from (pseudo)DB
 async function verifyUserMiddleware(req, res, next) {
     let user = req.headers.user;
     let addId = req.params.addId;
@@ -121,6 +120,7 @@ router.get("/:addId", (req, res) => {
 
 // delete all adds - only admin can do that (see middleware)
 // requires password="1234"
+// varifyUserMiddleware reads the adds from (pseudo)DB
 router.delete("/", verifyPasswordMiddleware,
     verifyUserMiddleware, (req, res) => {
         adds = [];
@@ -133,6 +133,7 @@ router.delete("/", verifyPasswordMiddleware,
 // delete single add, only if user === Add.author, unless the user is admin
 // (see middleware)
 // requires password="1234"
+// varifyUserMiddleware reads the adds from (pseudo)DB
 router.delete("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
     async (req, res) => {
         let availableIds = getArrOfValues(adds, "id");
@@ -152,6 +153,7 @@ router.delete("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
 // modify single add, only if user === Add.author, unless the user is admin
 // (see middleware)
 // requires password="1234"
+// varifyUserMiddleware reads the adds from (pseudo)DB
 router.patch("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
     (req, res) => {
         let availableIds = getArrOfValues(adds, "id");
