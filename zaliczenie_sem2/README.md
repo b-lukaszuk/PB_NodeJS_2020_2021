@@ -177,7 +177,7 @@ npm run dev debug # i teraz nalezy uzywac normalnie
 
 ```bash
 # srodowisko wyeksportowane z Postmana
-cat nodeJSzalSem2.postman_environment.json
+cat ./exportsFromPostman/nodeJSzalSem2.postman_environment.json
 # przyklady zadan wyeksportowane z Postmana
-cat zalSem2NodeJS.postman_collection.json
+cat ./exportsFromPostman/zalSem2NodeJS.postman_collection.json
 ```
