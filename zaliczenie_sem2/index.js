@@ -11,6 +11,8 @@ const fs = require("fs");
 ///////////////////////////////////////////////////////////////////////////////
 //                         global constants/variables                        //
 ///////////////////////////////////////////////////////////////////////////////
+// in real setting ./environmentalVariables/sample.env
+// should be added to .gitignore
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: "./environmentalVariables/sample.env" });
 }

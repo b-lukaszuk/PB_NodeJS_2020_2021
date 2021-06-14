@@ -33,7 +33,12 @@ class Add {
      * @param {any} value - new value of a field (no check for corectness)
      */
     setField(key, value) {
-        this[key] = value;
+        if (key === "id") {
+            throw Error("Cannot set id. " +
+                "Id is set authomatically only during object creation");
+        } else {
+            this[key] = value;
+        }
     }
 }
 

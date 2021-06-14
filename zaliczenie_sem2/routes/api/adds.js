@@ -135,7 +135,7 @@ router.delete("/", verifyPasswordMiddleware,
 // requires password="1234"
 // varifyUserMiddleware reads the adds from (pseudo)DB
 router.delete("/:addId", verifyPasswordMiddleware, verifyUserMiddleware,
-    async (req, res) => {
+    (req, res) => {
         let availableIds = getArrOfValues(adds, "id");
         if (availableIds.includes(parseInt(req.params.addId))) {
             adds = removeAddFromAdds(req.params.addId, adds);
