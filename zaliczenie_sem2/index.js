@@ -50,11 +50,13 @@ function todayDate() {
     let [month, day, year, garbage] = today.split("/");
     let result = `${day}_${month}_${year}`;
     return result;
+    // dawac format iso rok/miesiac/dzien
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 middleware                                //
 ///////////////////////////////////////////////////////////////////////////////
+// if z debugiem na zewnatrz middleware - lepsza opcja
 function loggerMiddleware(req, res, next) {
     if (debugMode) {
         let reqReceivedTime = new Date().toLocaleString();

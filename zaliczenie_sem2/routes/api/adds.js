@@ -5,8 +5,11 @@
 const express = require("express");
 const router = express.Router();
 
-const utils = require("./utils/utils.js");
+const utils = require("./utils/utils.js"); // ewentualnie do wyniesienia pietro wyzej do poziomu appi
 
+// zmienic nazwy add na advertisment -> Add
+// komity -> komit nie zmienia kodu ale strukture (wciecia, spacje) -> osobny pull request
+// nie dawac jednoczesnie zmian formatowania i zmian kodu do komitow
 // functions
 const readAdds = require("../../readWriteAdds/readAdds.js").getAdds;
 const saveAdds = require("../../readWriteAdds/writeAdds.js").saveAdds;
@@ -34,6 +37,11 @@ Object.freeze(users);
 ///////////////////////////////////////////////////////////////////////////////
 //                                 middleware                              //
 ///////////////////////////////////////////////////////////////////////////////
+// normalnie hasla przechowujemy zahashowane
+// Md5 sha1 - obecnie niewskazane
+// sha256, bcrypt - zalecane
+// rozumieć różnice między szyfrowaniem a hashowaniem
+// zdarza sie na rozmowach kwalifikacyjnych
 function verifyPasswordMiddleware(req, res, next) {
     if (req.headers.password === undefined) {
         res.status(401).json({ "msg": "authorization by password required" });
